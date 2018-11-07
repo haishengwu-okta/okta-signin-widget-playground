@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@okta/okta-signin-widget": "^2.13.0",
+    "prop-types": "^15.6.2",
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",

@@ -7,17 +7,14 @@ import '@okta/okta-signin-widget/dist/css/okta-theme.css';
 class OktaSignInWidget extends Component {
   static propTypes = {
     successFn: PropTypes.func,
+    featureOptions: PropTypes.obj
   };
   constructor (props) {
     super(props);
     this.signIn = new OktaSignIn({
       baseUrl: "http://localhost:8080/",
       logo: '/react.svg',
-      features: {
-        router: true,
-        rememberMe: true,
-        multiOptionalFactorEnroll: true
-      }
+      features: this.props.featureOptions
     });
   }
 

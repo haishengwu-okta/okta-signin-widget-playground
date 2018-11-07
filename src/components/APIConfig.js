@@ -94,7 +94,7 @@ class APIConfig extends React.Component {
             config: postDataKeys,
           })
           .then((response) => {
-            console.log(response);
+            //console.log(response);
             this.props.successFn(response.data);
           })
           .catch((error) => {
