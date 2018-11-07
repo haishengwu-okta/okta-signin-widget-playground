@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
 
 class OktaSignInWidget extends Component {
+  static propTypes = {
+    successFn: PropTypes.func,
+  };
   constructor (props) {
     super(props);
     this.signIn = new OktaSignIn({
-      baseUrl: "http://rain.okta1.com:1802/",
+      baseUrl: "http://localhost:8080/",
       logo: '/react.svg',
       features: this.getWidgetDefaultFeatures()
     });
@@ -24,9 +28,7 @@ class OktaSignInWidget extends Component {
   componentDidMount() {
     this.signIn.renderEl(
       { el: '#sign-in-widget' },
-      () => {
-        //success
-      },
+      this.props.successFn,
       (err) => {
         throw err;
       },
