@@ -4,15 +4,17 @@
   "private": true,
   "dependencies": {
     "@okta/okta-signin-widget": "^2.13.0",
-    "rc-tree": "^1.14.8",
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "rc-tree": "^1.14.8",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-scripts": "2.1.1"
   },
   "scripts": {
+    "start-mock": "node mock-server/index.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

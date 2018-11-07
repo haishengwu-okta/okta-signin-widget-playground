@@ -2,16 +2,18 @@
 
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import Tree, { TreeNode } from 'rc-tree';
+import axios from 'axios';
+import Tree from 'rc-tree';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
+
+const MOCK_API_SERVER = 'http://localhost:8080';
 
 const transactions = [
     {
         key: 'MFA_CHALLENGE',
         children: [
-            'GOOGLE_OTP',
+            'GOOGLE_TOTP',
             'OKTA_PUSH',
             'OKTA_SMS',
             'OKTA_CALL',
@@ -40,33 +42,57 @@ const transactions = [
 // MFA_ENROLL_ACTIVATE,
 // MFA_REQUIRED,
 
+const treeData = transactions.map((obj) => {
+    const children = Array.isArray(obj.children) ? obj.children.map((x) => {
+        return { key: `${obj.key}--${x}`, title: x };
+    }) : [];
+    return { key: obj.key, title: obj.key, children };
+})
 
-
+const convertKeysToPostData = (keys) => {
+    const result = {};
+    keys.forEach((key) => {
+        if (key.indexOf('--') > 0) {
+            const [parent, child] = key.split('--');
+            if (!result[parent]) {
+                result[parent] = { key: parent, children: [] };
+            }
+            result[parent].children.push(child);
+        } else {
+            result[key] = { key, children: [] };
+        }
+    })
+    return Object.values(result);
+}
 
 class APIConfig extends React.Component {
-    // static propTypes = {
-    //     keys: PropTypes.array,
-    // };
-    // static defaultProps = {
-    //     keys: [],
-    // };
     constructor(props) {
         super(props);
-        this.treeData = transactions.map((obj) => {
-            const children = Array.isArray(obj.children) ? obj.children.map((x) => {
-                return { key: `${obj.key}_${x}`, title: x };
-            }) : [];
-            return { key: obj.key, title: obj.key, children };
-        })
-
         this.state = {
         };
     }
-    onCheck = (checkedKeys, info) => {
-        console.log('onCheck', checkedKeys, info);
-    };
-    render() {
 
+    onCheck = (checkedKeys, info) => {
+        // console.log('onCheck', checkedKeys, info);
+        this.keys = checkedKeys;
+    }
+
+    onSaveConfig = () => {
+        const postDataKeys = convertKeysToPostData(this.keys);
+
+        axios.post(`${MOCK_API_SERVER}/config`, {
+            config: postDataKeys,
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
+    };
+
+    render() {
         return (
             <div className="main-api-config">
                 <h2>API Configuration</h2>
@@ -79,9 +105,9 @@ class APIConfig extends React.Component {
                     defaultExpandAll
                     onExpand={this.onExpand}
                     onCheck={this.onCheck}
-                    treeData={this.treeData}
+                    treeData={treeData}
                 />
-                <button>Save</button>
+                <button onClick={this.onSaveConfig}>Save</button>
             </div>
         );
     }
