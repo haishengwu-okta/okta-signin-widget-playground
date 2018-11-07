@@ -26,7 +26,7 @@ app.post('/api/v1/authn', function(req, res, next) {
     console.log(config);
     console.log(children);
     const factors = children.map(child => {
-      if (child === 'SECURITY_QUESTION') {
+      if (child === 'OKTA_SECURITY_QUESTION') {
         return {
           "id": "ufs2cqqeDQpd1Y3QJ0g4",
           "factorType": "question",
