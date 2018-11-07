@@ -18,14 +18,14 @@ const transactions = [
             'OKTA_SMS',
             'OKTA_CALL',
             'OKTA_EMAIL',
-            'SECURITY_QUESTION'
+            'OKTA_SECURITY_QUESTION'
         ],
     },
     {
         key: 'MFA_VERIFY',
         children: [
             'OKTA_SMS',
-            'SECURITY_QUESTION'
+            'OKTA_SECURITY_QUESTION'
         ],
     },
     {
