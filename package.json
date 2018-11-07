@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@okta/okta-signin-widget": "^2.13.0",
+    "rc-tree": "^1.14.8",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-scripts": "2.1.1"

@@ -5,95 +5,86 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Tree, { TreeNode } from 'rc-tree';
 import 'rc-tree/assets/index.css';
+import './APIConfig.css';
 
-const Transactions = [
+const transactions = [
     {
         key: 'MFA_CHALLENGE',
         children: [
-        'GOOGLE_OTP',
-        'OKTA_PUSH',
-        'OKTA_SMS',
-        'OKTA_CALL',
-        'OKTA_EMAIL',
-        'SECURITY_QUESTION'
+            'GOOGLE_OTP',
+            'OKTA_PUSH',
+            'OKTA_SMS',
+            'OKTA_CALL',
+            'OKTA_EMAIL',
+            'SECURITY_QUESTION'
         ],
     },
     {
         key: 'MFA_VERIFY',
         children: [
-        'OKTA_SMS',
-        'SECURITY_QUESTION'
+            'OKTA_SMS',
+            'SECURITY_QUESTION'
         ],
     },
     {
         key: 'SUCCESS'
     }
 ];
-    // LOCKED_OUT
-    // PASSWORD_EXPIRED
-    // PASSWORD_RESET
-    // PASSWORD_WARN,
-    // RECOVERY,
-    // RECOVERY_CHALLENGE,
-    // MFA_ENROLL,
-    // MFA_ENROLL_ACTIVATE,
-    // MFA_REQUIRED,
+// LOCKED_OUT
+// PASSWORD_EXPIRED
+// PASSWORD_RESET
+// PASSWORD_WARN,
+// RECOVERY,
+// RECOVERY_CHALLENGE,
+// MFA_ENROLL,
+// MFA_ENROLL_ACTIVATE,
+// MFA_REQUIRED,
 
 
 
-const treeData = Transactions.map((obj) => {
-    const children = Array.isArray(obj.children) ? obj.children.map((x) => {
-        return { key: x, title: x };
-    }) : [];
-    return { key: obj.key, title: obj.key, children};
-})
 
 class APIConfig extends React.Component {
-  static propTypes = {
-    keys: PropTypes.array,
-  };
-  static defaultProps = {
-    keys: ['0-0-0-0'],
-  };
-  constructor(props) {
-    super(props);
-    const keys = props.keys;
-    this.state = {
-      defaultExpandedKeys: keys,
-      defaultSelectedKeys: keys,
-      defaultCheckedKeys: keys,
-    };
-  }
-  onExpand = (expandedKeys) => {
-    // console.log('onExpand', expandedKeys, arguments);
-  };
-  onSelect = (selectedKeys, info) => {
-    console.log('selected', selectedKeys, info);
-    this.selKey = info.node.props.eventKey;
-  };
-  onCheck = (checkedKeys, info) => {
-    console.log('onCheck', checkedKeys, info);
-  };
-  render() {
+    // static propTypes = {
+    //     keys: PropTypes.array,
+    // };
+    // static defaultProps = {
+    //     keys: [],
+    // };
+    constructor(props) {
+        super(props);
+        this.treeData = transactions.map((obj) => {
+            const children = Array.isArray(obj.children) ? obj.children.map((x) => {
+                return { key: `${obj.key}_${x}`, title: x };
+            }) : [];
+            return { key: obj.key, title: obj.key, children };
+        })
 
-    return (
-      <div style={{ margin: '0 20px' }}>
-        <Tree
-          className="myCls"
-          showLine
-          checkable
-          selectable={ false }
-          defaultExpandAll
-          onExpand={this.onExpand}
-        //   defaultSelectedKeys={this.state.defaultSelectedKeys}
-        //   defaultCheckedKeys={this.state.defaultCheckedKeys}
-          onSelect={this.onSelect}
-          onCheck={this.onCheck}
-          treeData={treeData}
-        />
-      </div>
-    );
-  }
+        this.state = {
+        };
+    }
+    onCheck = (checkedKeys, info) => {
+        console.log('onCheck', checkedKeys, info);
+    };
+    render() {
+
+        return (
+            <div className="main-api-config">
+                <h2>API Configuration</h2>
+                <Tree
+                    className="myCls"
+                    showIcon={false}
+                    showLine={false}
+                    checkable
+                    selectable={false}
+                    defaultExpandAll
+                    onExpand={this.onExpand}
+                    onCheck={this.onCheck}
+                    treeData={this.treeData}
+                />
+                <button>Save</button>
+            </div>
+        );
+    }
 }
 
 export default APIConfig;
