@@ -7,7 +7,7 @@ class OktaSignInWidget extends Component {
   constructor (props) {
     super(props);
     this.signIn = new OktaSignIn({
-      baseUrl: "http://rain.okta1.com:1802/",
+      baseUrl: "http://localhost:8080/",
       logo: '/react.svg',
       features: {
         router: true,
