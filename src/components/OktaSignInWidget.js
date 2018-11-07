@@ -21,7 +21,7 @@ class OktaSignInWidget extends Component {
     this.signIn.renderEl(
       { el: '#sign-in-widget' },
       () => {
-        //success
+        console.log('a');
       },
       (err) => {
         throw err;
