@@ -12,6 +12,12 @@ class App extends Component {
       loginState: null
     }
   }
+
+  apiConfigSuccessFn = (res) => {
+    this.setState({
+      loginState: null
+    })
+  }
   loginSuccessFn = (res) => {
     this.setState({
       loginState: 'SUCCESS'
@@ -19,9 +25,10 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.state);
     return (
       <div className="App">
-        <APIConfig />
+        <APIConfig successFn={this.apiConfigSuccessFn}/>
         { this.state.loginState ?
           <LoginSuccess /> :
           <OktaSignInWidget successFn={this.loginSuccessFn} />

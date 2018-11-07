@@ -4,6 +4,7 @@
 import React from 'react';
 import axios from 'axios';
 import Tree from 'rc-tree';
+import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
 
@@ -30,12 +31,21 @@ const transactions = [
     },
     {
         key: 'SUCCESS'
+    },
+    {
+        key: 'LOCKED_OUT'
+    },
+    {
+        key: 'PASSWORD_EXPIRED'
+    },
+    {
+        key: 'PASSWORD_WARN'
     }
 ];
-// LOCKED_OUT
-// PASSWORD_EXPIRED
+//
+//
 // PASSWORD_RESET
-// PASSWORD_WARN,
+// ,
 // RECOVERY,
 // RECOVERY_CHALLENGE,
 // MFA_ENROLL,
@@ -66,6 +76,10 @@ const convertKeysToPostData = (keys) => {
 }
 
 class APIConfig extends React.Component {
+    static propTypes = {
+        successFn: PropTypes.func,
+      };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -73,7 +87,6 @@ class APIConfig extends React.Component {
     }
 
     onCheck = (checkedKeys, info) => {
-        // console.log('onCheck', checkedKeys, info);
         this.keys = checkedKeys;
     }
 
@@ -83,10 +96,11 @@ class APIConfig extends React.Component {
         axios.post(`${MOCK_API_SERVER}/config`, {
             config: postDataKeys,
           })
-          .then(function (response) {
+          .then((response) => {
             console.log(response);
+            this.props.successFn(response.data);
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log(error);
           });
 
