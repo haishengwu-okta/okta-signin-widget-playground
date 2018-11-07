@@ -12,10 +12,14 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  
+
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-Okta-User-Agent-Extended, X-Okta-XsrfToken');
   next();
 })
+
+app.post('/config', function(req, res, next) {
+  res.json({success: 'success'});
+});
 
 app.post('/api/v1/authn', function(req, res, next) {
   console.log(req);
@@ -80,4 +84,3 @@ app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
 app.listen(8080, function () {
   console.log('CORS-enabled web server listening on port 8080');
 });
-

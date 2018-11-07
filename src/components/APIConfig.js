@@ -7,13 +7,13 @@ import Tree from 'rc-tree';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
 
-const MOCK_API_SERVER = 'localhost:8080';
+const MOCK_API_SERVER = 'http://localhost:8080';
 
 const transactions = [
     {
         key: 'MFA_CHALLENGE',
         children: [
-            'GOOGLE_OTP',
+            'GOOGLE_TOTP',
             'OKTA_PUSH',
             'OKTA_SMS',
             'OKTA_CALL',
@@ -59,7 +59,7 @@ const convertKeysToPostData = (keys) => {
             }
             result[parent].children.push(child);
         } else {
-            result[key] = { key };
+            result[key] = { key, children: [] };
         }
     })
     return Object.values(result);
