@@ -9,12 +9,16 @@ class OktaSignInWidget extends Component {
     this.signIn = new OktaSignIn({
       baseUrl: "http://rain.okta1.com:1802/",
       logo: '/react.svg',
-      features: {
+      features: this.getWidgetDefaultFeatures()
+    });
+  }
+
+  getWidgetDefaultFeatures() {
+    return {
         router: true,
         rememberMe: true,
         multiOptionalFactorEnroll: true
-      }
-    });
+    };
   }
 
   componentDidMount() {
