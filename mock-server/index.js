@@ -53,6 +53,43 @@ app.post('/api/v1/authn', function(req, res, next) {
             }
           }
         }
+      }, {
+        "id": "sms2gt8gzgEBPUWBIFHN",
+        "factorType": "sms",
+        "provider": "OKTA",
+        "status": "ACTIVE",
+        "created": "2014-06-27T20:27:26.000Z",
+        "lastUpdated": "2014-06-27T20:27:26.000Z",
+        "profile": {
+          "phoneNumber": "+1-555-415-1337"
+        },
+        "_links": {
+          "verify": {
+            "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN/verify",
+            "hints": {
+              "allow": [
+                "POST"
+              ]
+            }
+          },
+          "self": {
+            "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN",
+            "hints": {
+              "allow": [
+                "GET",
+                "DELETE"
+              ]
+            }
+          },
+          "user": {
+            "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL",
+            "hints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        }
       }],
       "policy": {
         "allowRememberDevice": false,
@@ -70,6 +107,11 @@ app.post('/api/v1/authn', function(req, res, next) {
       }
     }
   });
+});
+
+app.post('/api/v1/users/:userId/factors/:factorId/verify', function(req, res, next) {
+  console.log(req);
+  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
 });
 
 app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
