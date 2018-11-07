@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import widgetConfig from '../config/widgetConfig';
 import Checkbox from './Checkbox';
 import OktaSignInWidget from './OktaSignInWidget';
+import PropTypes from 'prop-types';
 
 const checkboxItems = widgetConfig.features;
+const defaultFeatures = {
+    router: true,
+    rememberMe: true,
+    multiOptionalFactorEnroll: true
+};
 
 class Settings extends Component {
+  static propTypes = {
+    successFn: PropTypes.func,
+  };
+
   constructor (props) {
     super(props);
   }
@@ -15,11 +25,8 @@ class Settings extends Component {
   }
 
   toggleCheckbox = label => {
-    if (this.selectedCheckboxes.has(label)) {
-      this.selectedCheckboxes.delete(label);
-    } else {
-      this.selectedCheckboxes.set(label, true);
-    }
+    defaultFeatures[label] = true;
+    this.props.successFn(defaultFeatures);
   }
 
   createCheckbox = label => (
