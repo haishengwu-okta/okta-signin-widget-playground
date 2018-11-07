@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
 
 class OktaSignInWidget extends Component {
+  static propTypes = {
+    successFn: PropTypes.func,
+  };
   constructor (props) {
     super(props);
     this.signIn = new OktaSignIn({
@@ -20,9 +24,7 @@ class OktaSignInWidget extends Component {
   componentDidMount() {
     this.signIn.renderEl(
       { el: '#sign-in-widget' },
-      () => {
-        console.log('a');
-      },
+      this.props.successFn,
       (err) => {
         throw err;
       },
