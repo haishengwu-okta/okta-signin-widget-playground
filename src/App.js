@@ -47,8 +47,7 @@ class App extends Component {
         <Grid.Column floated='left' width={5}>
           <APIConfig apiConfigFn={this.apiConfigFn} />
         </Grid.Column>
-        <Footer
-        />
+        <Footer />
       </Grid>
 
     );

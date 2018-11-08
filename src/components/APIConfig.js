@@ -132,7 +132,7 @@ class APIConfig extends React.Component {
                         treeData={treeDataRegistrations}
                     />
                     <ToastContainer
-                        position="top-center"
+                        position="bottom-center"
                         autoClose={1000}
                         hideProgressBar={false}
                         newestOnTop={false}

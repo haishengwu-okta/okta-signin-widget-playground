@@ -51,6 +51,7 @@ class OktaSignInWidget extends Component {
     if (this.signIn) {
       this.signIn.remove();
     }
+    console.log('render widget', this.props.signInWidgetOption);
     this.signIn = new OktaSignIn(this.props.signInWidgetOption);
     this.signIn.renderEl(
       { el: '#sign-in-widget' },

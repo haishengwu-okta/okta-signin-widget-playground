@@ -3,8 +3,8 @@
 }
 
 .ui.grid {
-	padding: 0 5em;
-	margin-top: 5em;
+	padding: 5em;
+	/* margin-top: 5em; */
 }
 
 body {
@@ -12,12 +12,4 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-.footer {
-	position: fixed !important;
-    width: 100% !important;
-    padding: 15px !important;
-    bottom: 0px !important;
-    left: 0px !important;
 }

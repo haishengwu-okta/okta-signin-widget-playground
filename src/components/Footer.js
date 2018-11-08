@@ -1,12 +1,13 @@
 import React from 'react';
-
+import { Card } from 'semantic-ui-react';
+import './Footer.css';
 
 class Footer extends React.Component {
   render() {
   return (
-    <div className="ui card footer">
-      <a href="http://www.okta.com">Powered by Okta</a>
-    </div>
+    <Card className="footer">
+      <a href="http://www.okta.com">Powered by Okta @ 2018</a>
+    </Card>
     )
   }
 }

@@ -13,6 +13,7 @@ const signInWidgetOption = {
   logo: '/img/logo.svg',
   features: {
     router: true,
+    rememberMe: false,
   },
 };
 
@@ -91,7 +92,7 @@ class Settings extends Component {
           </Form>
 
           <ToastContainer
-            position="top-center"
+            position="bottom-center"
             autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
