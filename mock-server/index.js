@@ -235,6 +235,15 @@ const factorObjects = {
 
 let mockFactors;
 
+function finalReponse(res) {
+  if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
+    res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  } else {
+    res.status(401);
+    res.json(mkError("Invalid value provided."));
+  }
+}
+
 app.post('/config', function(req, res, next) {
   mockSettings = req.body;
   res.json({success: 'success'});
@@ -248,6 +257,25 @@ app.post('/api/v1/authn', function(req, res, next) {
     const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
     mockFactors = children.map(child => factorObjects[child])
                           .filter(factor => !!factor);
+    if (children.includes('OKTA_PUSH')) {
+      mockFactors = mockFactors.concat({
+        "id": "ost1emz8qetG6ttDr1d8",
+        "factorType": "token:software:totp",
+        "provider": "OKTA",
+        "vendorName": "OKTA",
+        "profile": {
+          "credentialId": "richard.heng@okta.com"
+        },
+        "_links": {
+          "verify": {
+            "href": "https://okta.okta.com/api/v1/authn/factors/ost1emz8qetG6ttDr1d8/verify",
+            "hints": {
+              "allow": ["POST"]
+            }
+          }
+        }
+      });
+    }
     res.json({
       "stateToken": "00X3E_Clhvnjn-zVIivFgWdG3JtX3l-wspPtSSH5yG",
       "expiresAt": "2018-11-08T18:16:47.000Z",
@@ -264,23 +292,7 @@ app.post('/api/v1/authn', function(req, res, next) {
             "timeZone": "America/Los_Angeles"
           }
         },
-        "factors": mockFactors.concat({
-          "id": "ost1emz8qetG6ttDr1d8",
-          "factorType": "token:software:totp",
-          "provider": "OKTA",
-          "vendorName": "OKTA",
-          "profile": {
-            "credentialId": "richard.heng@okta.com"
-          },
-          "_links": {
-            "verify": {
-              "href": "https://okta.okta.com/api/v1/authn/factors/ost1emz8qetG6ttDr1d8/verify",
-              "hints": {
-                "allow": ["POST"]
-              }
-            }
-          }
-        }),
+        "factors": mockFactors,
         "policy": {
           "allowRememberDevice": false,
           "rememberDeviceLifetimeInMinutes": 0,
@@ -306,7 +318,7 @@ app.post('/api/v1/authn', function(req, res, next) {
     res.json({"stateToken":"00zXV_boPAtyUu3_5qFHugbilbW4y54PxWM0f1kNKT","expiresAt":"2018-11-08T18:01:23.000Z","status":"PASSWORD_EXPIRED","_embedded":{"user":{"id":"00uqbxPh7V77mxdho0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"inca@clouditude.net","firstName":"Inca-Louise","lastName":"O'Rain Dum","locale":"en","timeZone":"America/Los_Angeles"}},"policy":{"complexity":{"minLength":8,"minLowerCase":1,"minUpperCase":1,"minNumber":1,"minSymbol":0,"excludeUsername":true},"age":{"minAgeMinutes":0,"historyCount":0}}},"_links":{"next":{"name":"changePassword","href":"http://localhost:8080/api/v1/authn/credentials/change_password","hints":{"allow":["POST"]}},"cancel":{"href":"http://localhost:8080/api/v1/authn/cancel","hints":{"allow":["POST"]}}}});
   }
   else if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
-    res.json({"expiresAt":"2018-11-07T20:36:19.000Z","status":"SUCCESS","sessionToken":"20111Ur6KD4SUsGGZ48Aa0iwlVeM3nMNuDxkLjDyCJ9YpDA19pnkbjN","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+    finalReponse(res);
   }
   else {
     res.status(401);
@@ -315,11 +327,11 @@ app.post('/api/v1/authn', function(req, res, next) {
 });
 
 app.post('/api/v1/users/:userId/factors/:factorId/verify', function(req, res, next) {
-  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  finalReponse(res);
 });
 
 app.post('/api/v1/users/:userId/factors', function(req, res, next) {
-  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  finalReponse(res);
 });
 
 app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
@@ -333,7 +345,7 @@ app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
     res.json(mkError("Invalid Passcode/Answer", [ "Your answer doesn't match our records. Please try again." ]));
   }
   else if (factor.length === 1) {
-    res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+    finalReponse(res);
   } else {
     res.status(401);
     res.json(mkError("Authentication failed"));
@@ -372,7 +384,7 @@ app.post('/api/v1/authn/cancel', function(req, res, next) {
 });
 
 app.post('/api/v1/authn/credentials/change_password', function(req, res, next) {
-  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  finalReponse(res);
 });
 
 app.get('/login/getimage', function(req, res, next) {
