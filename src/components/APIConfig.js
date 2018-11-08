@@ -24,16 +24,15 @@ const transactions = [
     {
         key: 'LOCKED_OUT'
     },
-
+    {
+        key: 'PASSWORD_WARN'
+    },
     {
         key: 'SUCCESS'
     },
 
 ];
 
-// {
-//     key: 'PASSWORD_WARN'
-// },
 // {
 //     key: 'PASSWORD_EXPIRED'
 // },

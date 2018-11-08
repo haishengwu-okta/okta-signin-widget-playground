@@ -257,6 +257,9 @@ app.post('/api/v1/authn', function(req, res, next) {
       }
     });
   }
+  else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN').length > 0) {
+    res.json({"stateToken":"00zXV_boPAtyUu3_5qFHugbilbW4y54PxWM0f1kNKT","expiresAt":"2018-11-08T18:01:23.000Z","status":"PASSWORD_EXPIRED","_embedded":{"user":{"id":"00uqbxPh7V77mxdho0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"inca@clouditude.net","firstName":"Inca-Louise","lastName":"O'Rain Dum","locale":"en","timeZone":"America/Los_Angeles"}},"policy":{"complexity":{"minLength":8,"minLowerCase":1,"minUpperCase":1,"minNumber":1,"minSymbol":0,"excludeUsername":true},"age":{"minAgeMinutes":0,"historyCount":0}}},"_links":{"next":{"name":"changePassword","href":"http://localhost:8080/api/v1/authn/credentials/change_password","hints":{"allow":["POST"]}},"cancel":{"href":"http://localhost:8080/api/v1/authn/cancel","hints":{"allow":["POST"]}}}});
+  }
   else if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
     res.json({"expiresAt":"2018-11-07T20:36:19.000Z","status":"SUCCESS","sessionToken":"20111Ur6KD4SUsGGZ48Aa0iwlVeM3nMNuDxkLjDyCJ9YpDA19pnkbjN","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
   }
@@ -278,8 +281,11 @@ app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
   console.log(req.body);
   const factorId = req.params.factorId;
   const factor = mockFactors.filter((f) => f.id === factorId);
-
-  if (req.body.answer === 'fail') {
+  console.log(mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN'))
+  if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN').length > 0) {
+    res.json({"stateToken":"00VXyMVirQsranoRXat5qOUSQ_J7WhGazAhW4Kssz2","expiresAt":"2018-11-08T17:50:14.000Z","status":"PASSWORD_EXPIRED","_embedded":{"user":{"id":"00uqbxPh7V77mxdho0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"inca@clouditude.net","firstName":"Inca-Louise","lastName":"O'Rain Dum","locale":"en","timeZone":"America/Los_Angeles"}},"policy":{"complexity":{"minLength":8,"minLowerCase":1,"minUpperCase":1,"minNumber":1,"minSymbol":0,"excludeUsername":true},"age":{"minAgeMinutes":0,"historyCount":0}}},"_links":{"next":{"name":"changePassword","href":"http://localhost:8080/api/v1/authn/credentials/change_password","hints":{"allow":["POST"]}},"cancel":{"href":"http://localhost:8080/api/v1/authn/cancel","hints":{"allow":["POST"]}}}});
+  }
+  else if (req.body.answer === 'fail') {
     res.status(403);
     res.json(mkError("Invalid Passcode/Answer", [ "Your answer doesn't match our records. Please try again." ]));
   }
@@ -294,7 +300,6 @@ app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
 app.get('/api/v1/registration/form', function(req, res, next) {
   console.log('get registration form');
   res.json({"policyId":"reg3h8seELACUgy3p0g4","lastUpdate":1540847616000,"profileSchema":{"properties":{"firstName":{"type":"string","title":"First name","maxLength":50,"default":"string"},"lastName":{"type":"string","title":"Last name","maxLength":50,"default":"string"},"password":{"type":"string","title":"Password","allOf":[{"description":"At least 8 character(s)","minLength":8},{"description":"At least 1 number(s)","format":"/[\\d]+/"},{"description":"At least 1 lowercase letter(s)","format":"/[a-z]+/"},{"description":"At least 1 uppercase letter(s)","format":"/[A-Z]+/"},{"description":"Does not contain part of username","format":"/^[#/userName]/"}],"default":"Password"},"email":{"type":"email","title":"Email","format":"email","default":"Email"}},"required":["email","password","firstName","lastName"],"fieldOrder":["email","password","firstName","lastName"]}});
-
 });
 
 app.post('/api/v1/registration/reg3h8seELACUgy3p0g4/register', function(req, res, next) {
@@ -303,6 +308,10 @@ app.post('/api/v1/registration/reg3h8seELACUgy3p0g4/register', function(req, res
 
 app.post('/api/v1/authn/cancel', function(req, res, next) {
   res.json({});
+});
+
+app.post('/api/v1/authn/credentials/change_password', function(req, res, next) {
+  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
 });
 
 app.listen(8080, function () {
