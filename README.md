@@ -9,8 +9,10 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 - [ ] bootstrap widget with state token
 - [ ] IDP Discovery flow
-- [ ] integrate with sign-in widget source code for quick development
-- [ ] `yarn start` both front-end and mock server
 - [ ] implement the OKTA PUSH, Google TOTP flow
-- [ ] show help links/docs upon click different API configuration so that people could quick learn how to config the real Org.
 - [ ] implement MFA set up
+
+- [ ] integrate with sign-in widget source code for quick development
+- [ ] show help links/docs upon click different API configuration so that people could quick learn how to config the real Org.
+- [ ] implement an interactive graph of [the transaction model](https://raw.githubusercontent.com/okta/okta.github.io/source/_source/_assets/img/auth-state-model.png)
+- [ ] `yarn start` both front-end and mock server
