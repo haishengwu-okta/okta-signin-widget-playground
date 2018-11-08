@@ -25,7 +25,9 @@ const mkError = (errorSummary = "", errorCausesSummary = []) => {
   }
 }
 
-let mockSettings = {};
+let mockSettings = {
+  config: []
+};
 const factorObjects = {
   OKTA_SECURITY_QUESTION: {
     "id": "ufs2cqqeDQpd1Y3QJ0g4",
@@ -289,12 +291,23 @@ app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
 
 app.get('/api/v1/registration/form', function(req, res, next) {
   console.log('get registration form');
-  res.json({"policyId":"reg3h8seELACUgy3p0g4","lastUpdate":1540847616000,"profileSchema":{"properties":{"firstName":{"type":"string","title":"First name","maxLength":50,"default":"string"},"lastName":{"type":"string","title":"Last name","maxLength":50,"default":"string"},"password":{"type":"string","title":"Password","allOf":[{"description":"At least 8 character(s)","minLength":8},{"description":"At least 1 number(s)","format":"/[\\d]+/"},{"description":"At least 1 lowercase letter(s)","format":"/[a-z]+/"},{"description":"At least 1 uppercase letter(s)","format":"/[A-Z]+/"},{"description":"Does not contain part of username","format":"/^[#/userName]/"}],"default":"Password"},"email":{"type":"email","title":"Email","format":"email","default":"Email"}},"required":["email","password","firstName","lastName"],"fieldOrder":["email","password","firstName","lastName"]}});
+
+  if (mockSettings.config.filter((o) => o.key === 'schema').length) {
+    res.json({"policyId":"reg3h8seELACUgy3p0g4","lastUpdate":1540847616000,"profileSchema":{"properties":{"firstName":{"type":"string","title":"First name","maxLength":50,"default":"string"},"lastName":{"type":"string","title":"Last name","maxLength":50,"default":"string"},"password":{"type":"string","title":"Password","allOf":[{"description":"At least 8 character(s)","minLength":8},{"description":"At least 1 number(s)","format":"/[\\d]+/"},{"description":"At least 1 lowercase letter(s)","format":"/[a-z]+/"},{"description":"At least 1 uppercase letter(s)","format":"/[A-Z]+/"},{"description":"Does not contain part of username","format":"/^[#/userName]/"}],"default":"Password"},"email":{"type":"email","title":"Email","format":"email","default":"Email"}},"required":["email","password","firstName","lastName"],"fieldOrder":["email","password","firstName","lastName"]}});
+  } else {
+    res.status(401);
+    res.json(mkError("Not Supported Registration Schema"));
+  }
 
 });
 
 app.post('/api/v1/registration/reg3h8seELACUgy3p0g4/register', function(req, res, next) {
-  res.json({activationToken: ""});
+  if (mockSettings.config.filter((o) => o.key === 'register').length) {
+    res.json({activationToken: ""});
+  } else {
+    res.status(401);
+    res.json(mkError("Not Supported Registration"));
+  }
 });
 
 app.post('/api/v1/authn/cancel', function(req, res, next) {
