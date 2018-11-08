@@ -12,7 +12,7 @@ const MOCK_API_SERVER = 'http://localhost:8080';
 
 const transactions = [
     {
-        key: 'MFA_CHALLENGE',
+        key: 'MFA_REQUIRED',
         children: [
             'GOOGLE_TOTP',
             'OKTA_PUSH',
@@ -23,16 +23,6 @@ const transactions = [
         ],
     },
     {
-        key: 'MFA_VERIFY',
-        children: [
-            'OKTA_SMS',
-            'OKTA_SECURITY_QUESTION'
-        ],
-    },
-    {
-        key: 'SUCCESS'
-    },
-    {
         key: 'LOCKED_OUT'
     },
     {
@@ -40,17 +30,24 @@ const transactions = [
     },
     {
         key: 'PASSWORD_WARN'
-    }
+    },
+    {
+        key: 'SUCCESS'
+    },
+
 ];
+
 //
 //
 // PASSWORD_RESET
-// ,
 // RECOVERY,
 // RECOVERY_CHALLENGE,
+//
 // MFA_ENROLL,
 // MFA_ENROLL_ACTIVATE,
 // MFA_REQUIRED,
+//
+//
 
 const treeData = transactions.map((obj) => {
     const children = Array.isArray(obj.children) ? obj.children.map((x) => {
