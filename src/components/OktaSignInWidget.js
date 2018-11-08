@@ -27,6 +27,10 @@ class OktaSignInWidget extends Component {
   }
 
   loginSuccess = (res) => {
+    if (this.state.loginState === 'ACTIVATION_EMAIL_SENT') {
+      // to show the reg email verification screen
+      return false;
+    }
     this.setState({
       loginState: res.status
     });
