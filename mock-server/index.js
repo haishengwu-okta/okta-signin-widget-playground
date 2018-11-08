@@ -185,6 +185,9 @@ const factorObjects = {
       "provider": "OKTA",
       "vendorName": "OKTA",
       "status": "PENDING_ACTIVATION",
+      "profile": {
+        "email": "foo@test.com",
+      },
       "_links": {
         "verify": {
           "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",

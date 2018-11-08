@@ -89,7 +89,7 @@ class APIConfig extends React.Component {
         this.state = {
         };
     }
-    
+
     notify = (message) => {
       toast.info(message);
     }
@@ -135,15 +135,15 @@ class APIConfig extends React.Component {
                     treeData={treeDataRegistrations}
                 />
                 <ToastContainer
-                  position="top-right"
-                  autoClose={2000}
+                  position="top-center"
+                  autoClose={1000}
                   hideProgressBar={false}
                   newestOnTop={false}
                   closeOnClick
                   rtl={false}
                   pauseOnVisibilityChange
-                  draggable
-                  pauseOnHover
+                  draggable={false}
+                  pauseOnHover={false}
               />
               </div>
             </div>

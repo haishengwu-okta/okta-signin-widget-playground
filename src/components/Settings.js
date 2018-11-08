@@ -77,9 +77,9 @@ class Settings extends Component {
         <div className='ui labeled input'>
           <div className='ui label label'> </div>
           <input type="text" onChange={this.updateBaseUrl} placeholder="oktadomain url"/>
-          <ToastContainer 
-            position="top-right"
-            autoClose={2000}
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
