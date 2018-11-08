@@ -30,8 +30,12 @@ const transactions = [
     {
         key: 'SUCCESS'
     },
-
 ];
+
+const registrations = [
+    { key: 'schema' },
+    { key: 'register' },
+]
 
 // {
 //     key: 'PASSWORD_EXPIRED'
@@ -48,12 +52,14 @@ const transactions = [
 //
 //
 
-const treeData = transactions.map((obj) => {
+const convertToTreeData = (obj) => {
     const children = Array.isArray(obj.children) ? obj.children.map((x) => {
         return { key: `${obj.key}--${x}`, title: x };
     }) : [];
     return { key: obj.key, title: obj.key, children };
-})
+};
+const treeDataTransactions = transactions.map(convertToTreeData);
+const treeDataRegistrations = registrations.map(convertToTreeData);
 
 const convertKeysToPostData = (keys) => {
     const result = {};
@@ -93,8 +99,9 @@ class APIConfig extends React.Component {
         return (
             <div className="main-api-config">
                 <Header as='h2'>API Configuration</Header>
+                <Header as='h3'>Transaction</Header>
                 <Tree
-                    className="myCls"
+                    className=""
                     showIcon={false}
                     showLine={false}
                     checkable
@@ -102,7 +109,19 @@ class APIConfig extends React.Component {
                     defaultExpandAll
                     onExpand={this.onExpand}
                     onCheck={this.onCheck}
-                    treeData={treeData}
+                    treeData={treeDataTransactions}
+                />
+                <Header as='h3'>Registration</Header>
+                <Tree
+                    className=""
+                    showIcon={false}
+                    showLine={false}
+                    checkable
+                    selectable={false}
+                    defaultExpandAll
+                    onExpand={this.onExpand}
+                    onCheck={this.onCheck}
+                    treeData={treeDataRegistrations}
                 />
             </div>
         );

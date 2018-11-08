@@ -22,7 +22,6 @@ class Settings extends Component {
 
   constructor(opt) {
     super(opt);
-    this.selectedCheckboxes = new Map();
   }
 
   componentDidMount() {
