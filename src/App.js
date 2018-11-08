@@ -3,6 +3,7 @@ import './App.css';
 import OktaSignInWidget from './components/OktaSignInWidget';
 import Settings from './components/Settings';
 import APIConfig from "./components/APIConfig";
+import Footer from "./components/Footer";
 import { save as saveApiConfig } from './api/config';
 import { Grid } from 'semantic-ui-react'
 
@@ -46,7 +47,10 @@ class App extends Component {
         <Grid.Column floated='left' width={5}>
           <APIConfig apiConfigFn={this.apiConfigFn} />
         </Grid.Column>
+        <Footer
+        />
       </Grid>
+
     );
   }
 }
