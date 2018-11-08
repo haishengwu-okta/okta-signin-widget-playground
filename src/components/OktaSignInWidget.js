@@ -7,8 +7,10 @@ import LoginSuccess from "./LoginSuccess";
 
 class OktaSignInWidget extends Component {
   static propTypes = {
-    signInWidgetOption: PropTypes.object
+    signInWidgetOption: PropTypes.object,
+    apiMockChanged: PropTypes.bool,
   };
+
   constructor (props) {
     super(props);
     this.state = {
@@ -34,6 +36,12 @@ class OktaSignInWidget extends Component {
     console.error('sign in widget login error', res);
   }
 
+  logoutFn = () => {
+    this.setState({
+      loginState: null,
+    });
+  }
+
   renderWidget() {
     if (this.signIn) {
       this.signIn.remove();
@@ -49,7 +57,7 @@ class OktaSignInWidget extends Component {
   render() {
     let mainComponent;
     if (this.state.loginState === 'SUCCESS') {
-      mainComponent = <LoginSuccess />;
+      mainComponent = <LoginSuccess logoutFn={this.logoutFn}/>;
     } else {
       mainComponent = <div id="sign-in-widget" />;
     }

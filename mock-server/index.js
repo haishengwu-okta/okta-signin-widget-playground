@@ -1,19 +1,31 @@
-var express = require('express');
-var cors = require('cors');
-var bodyParser = require('body-parser');
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
-var corsOptions = {
+const corsOptions = {
   origin: 'http://localhost:3000',
   credentials: true,
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, X-Okta-User-Agent-Extended, X-Okta-XsrfToken',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-var app = express();
+const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-var config = {};
+const mkError = (errorSummary = "", errorCausesSummary = []) => {
+  return {
+    errorCauses: errorCausesSummary.map((s) => {
+      return {errorSummary: s};
+    }),
+    errorCode: "E0000000",
+    errorId: "xxxyyyyzzz",
+    errorLink: "E0000000",
+    errorSummary,
+  }
+}
+
+let mockSettings = {};
 const factorObjects = {
   OKTA_SECURITY_QUESTION: {
     "id": "ufs2cqqeDQpd1Y3QJ0g4",
@@ -188,21 +200,25 @@ const factorObjects = {
   }
 }
 
+let mockFactors;
+
 app.post('/config', function(req, res, next) {
-  config = req.body;
+  mockSettings = req.body;
   res.json({success: 'success'});
 });
 
 app.post('/api/v1/authn', function(req, res, next) {
-  if (config.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
-    const children = config.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
-    console.log(config);
+  if (!mockSettings.config) {
+    res.status(401);
+    res.json(mkError("Authentication failed"));
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
+    const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
+    console.log(mockSettings);
     console.log(children);
-    const factors = children.map(child => {
-      return factorObjects[child];
-    })
-    .filter(factor => factor !== null);
-    console.log(factors);
+    mockFactors = children.map(child => factorObjects[child])
+                          .filter(factor => !!factor);
+    console.log(mockFactors);
     res.json({
       "stateToken": "00CBqQBP4AK64nnx44drxYY9gH2scLLQKd3URrXvni",
       "expiresAt": "2018-11-07T21:06:55.000Z",
@@ -219,7 +235,7 @@ app.post('/api/v1/authn', function(req, res, next) {
             "timeZone": "America/Los_Angeles"
           }
         },
-        "factors": factors,
+        "factors": mockFactors,
         "policy": {
           "allowRememberDevice": false,
           "rememberDeviceLifetimeInMinutes": 0,
@@ -236,21 +252,43 @@ app.post('/api/v1/authn', function(req, res, next) {
         }
       }
     });
-  } else {
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
     res.json({"expiresAt":"2018-11-07T20:36:19.000Z","status":"SUCCESS","sessionToken":"20111Ur6KD4SUsGGZ48Aa0iwlVeM3nMNuDxkLjDyCJ9YpDA19pnkbjN","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  }
+  else {
+    res.status(401);
+    res.json(mkError("Authentication failed"));
   }
 });
 
-app.post('/api/v1/users/:userId/factors/:factorId/verify', function(req, res, next) {
-  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
-});
+// app.post('/api/v1/users/:userId/factors/:factorId/verify', function(req, res, next) {
+//   res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+// });
 
-app.post('/api/v1/users/:userId/factors', function(req, res, next) {
-  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
-});
+// app.post('/api/v1/users/:userId/factors', function(req, res, next) {
+//   res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+// });
 
 app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
-  res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  console.log(req.body);
+  const factorId = req.params.factorId;
+  const factor = mockFactors.filter((f) => f.id === factorId);
+
+  if (req.body.answer === 'fail') {
+    res.status(403);
+    res.json(mkError("Invalid Passcode/Answer", [ "Your answer doesn't match our records. Please try again." ]));
+  }
+  else if (factor.length === 1) {
+    res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+  } else {
+    res.status(401);
+    res.json(mkError("Authentication failed"));
+  }
+});
+
+app.post('/api/v1/authn/cancel', function(req, res, next) {
+  res.json({});
 });
 
 app.listen(8080, function () {

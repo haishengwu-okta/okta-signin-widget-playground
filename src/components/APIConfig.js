@@ -23,9 +23,7 @@ const transactions = [
     {
         key: 'LOCKED_OUT'
     },
-    {
-        key: 'PASSWORD_EXPIRED'
-    },
+
     {
         key: 'PASSWORD_WARN'
     },
@@ -35,6 +33,9 @@ const transactions = [
 
 ];
 
+// {
+//     key: 'PASSWORD_EXPIRED'
+// },
 //
 //
 // PASSWORD_RESET

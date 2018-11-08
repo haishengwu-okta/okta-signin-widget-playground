@@ -3,21 +3,8 @@ import './App.css';
 import OktaSignInWidget from './components/OktaSignInWidget';
 import Settings from './components/Settings';
 import APIConfig from "./components/APIConfig";
-import axios from 'axios';
+import {save as saveApiConfig } from './api/config';
 
-const MOCK_API_SERVER = 'http://localhost:8080';
-
-const saveApiConfig = (postDataKeys) => {
-  axios.post(`${MOCK_API_SERVER}/config`, {
-    config: postDataKeys,
-  })
-    .then((response) => {
-      console.log('saved API config', response);
-    })
-    .catch((error) => {
-      console.log('API config error', error);
-    });
-}
 
 class App extends Component {
 
@@ -29,13 +16,16 @@ class App extends Component {
     }
   }
 
-  apiConfigFn = (res) => {
-    saveApiConfig(res);
+  apiConfigFn = async (res) => {
+    await saveApiConfig(res);
+    this.setState({
+      apiMockChanged: true
+    })
   }
 
-  saveSignInWidgetOptions = (res) => {
+  saveSignInWidgetOptions = (signInWidgetOption) => {
     this.setState({
-      signInWidgetOption: res
+      signInWidgetOption
     });
   };
 
@@ -44,7 +34,12 @@ class App extends Component {
       <div className="App">
         <Settings settingChangedFn={this.saveSignInWidgetOptions} />
         <APIConfig apiConfigFn={this.apiConfigFn} />
-        {this.state.signInWidgetOption && <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption} />}
+        {
+          this.state.signInWidgetOption &&
+            <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption}
+                              apiMockChanged={this.state.apiMockChanged}
+            />
+          }
       </div>
     );
   }
