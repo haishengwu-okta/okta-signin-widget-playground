@@ -62,9 +62,9 @@ class Settings extends Component {
         <Card.Content>
           <Header as='h2'>Widget Settings</Header>
 
+            <Header as='h3'>Features</Header>
           <Form size="small">
 
-            <Header as='h3'>Features</Header>
             <Form.Field>
               <List>
                 {

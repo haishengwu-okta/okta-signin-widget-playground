@@ -32,23 +32,21 @@ class App extends Component {
 
   render() {
     return (
-      <Grid>
-        <Grid.Column floated='right' width={4}>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        paddingTop: '15em'
+      }}>
           <Settings settingChangedFn={this.saveSignInWidgetOptions} />
-        </Grid.Column>
-        <Grid.Column width={5} floated='left'>
           {
             this.state.signInWidgetOption &&
             <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption}
               apiMockChanged={this.state.apiMockChanged}
             />
           }
-        </Grid.Column>
-        <Grid.Column floated='left' width={5}>
           <APIConfig apiConfigFn={this.apiConfigFn} />
-        </Grid.Column>
         <Footer />
-      </Grid>
+      </div>
 
     );
   }
