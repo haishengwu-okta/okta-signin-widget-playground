@@ -31,8 +31,6 @@ class App extends Component {
   };
 
   settingsSuccessFn = (res) => {
-  	console.log('features refreshed');
-  	console.log(res);
     this.setState({
 			loginState: false,
       features: res
@@ -44,10 +42,7 @@ class App extends Component {
       <div className="App">
         <Settings successFn={this.settingsSuccessFn}/>
         <APIConfig successFn={this.apiConfigSuccessFn}/>
-        { this.state.loginState ?
-          <LoginSuccess /> :
-          <OktaSignInWidget successFn={this.loginSuccessFn} featureOptions={this.state.features} />
-        }
+        <OktaSignInWidget successFn={this.loginSuccessFn} featureOptions={this.state.features} />
       </div>
     );
   }

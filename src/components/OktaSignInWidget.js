@@ -18,9 +18,7 @@ class OktaSignInWidget extends Component {
   }
 
   componentDidUpdate() {
-    console.log('component updated');
     this.signIn.remove();
-    this.widgetEl.innerHTML = '';
     this.renderWidget();
   }
 
@@ -40,7 +38,6 @@ class OktaSignInWidget extends Component {
   }
 
   render() {
-    this.renderWidget();
     return (
       <div>
         <div id="sign-in-widget" ref={el => this.widgetEl = el} />
