@@ -9,7 +9,7 @@ const checkboxItems = SettingsConfig.features;
 
 const signInWidgetOption = {
   baseUrl: "http://localhost:8080",
-  logo: '/logo.svg',
+  logo: '/img/logo.svg',
   features: {
     router: true,
   },
@@ -27,7 +27,6 @@ class Settings extends Component {
 
   constructor(opt) {
     super(opt);
-    this.selectedCheckboxes = new Map();
   }
 
   componentDidMount() {
