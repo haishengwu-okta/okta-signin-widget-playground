@@ -6,7 +6,6 @@ import APIConfig from "./components/APIConfig";
 import { save as saveApiConfig } from './api/config';
 import { Grid } from 'semantic-ui-react'
 
-
 class App extends Component {
 
   constructor(options) {
@@ -44,20 +43,10 @@ class App extends Component {
             />
           }
         </Grid.Column>
-        <Grid.Column floated='right' width={2}>
+        <Grid.Column floated='right' width={3}>
           <Settings settingChangedFn={this.saveSignInWidgetOptions} />
         </Grid.Column>
       </Grid>
-      // <div className="App">
-      //   <Settings settingChangedFn={this.saveSignInWidgetOptions} />
-      //   <APIConfig apiConfigFn={this.apiConfigFn} />
-      //   {
-      //     this.state.signInWidgetOption &&
-      //       <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption}
-      //                         apiMockChanged={this.state.apiMockChanged}
-      //       />
-      //     }
-      // </div>
     );
   }
 }

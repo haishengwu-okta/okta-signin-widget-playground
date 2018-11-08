@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import SettingsConfig from './SettingsConfig';
-// import Checkbox from './forms/Checkbox';
 import PropTypes from 'prop-types';
 import './Settings.css';
 import { Header, List, Checkbox } from 'semantic-ui-react'
