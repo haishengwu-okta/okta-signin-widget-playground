@@ -24,7 +24,9 @@ const transactions = [
     {
         key: 'LOCKED_OUT'
     },
-
+    {
+        key: 'PASSWORD_WARN'
+    },
     {
         key: 'SUCCESS'
     },
@@ -35,9 +37,6 @@ const registrations = [
     { key: 'register' },
 ]
 
-// {
-//     key: 'PASSWORD_WARN'
-// },
 // {
 //     key: 'PASSWORD_EXPIRED'
 // },
