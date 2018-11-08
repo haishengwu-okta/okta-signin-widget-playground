@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import widgetConfig from '../config/widgetConfig';
 import Checkbox from './Checkbox';
-import OktaSignInWidget from './OktaSignInWidget';
 import PropTypes from 'prop-types';
+import './Settings.css';
 
 const checkboxItems = widgetConfig.features;
 const defaultFeatures = {
