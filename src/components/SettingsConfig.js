@@ -4,6 +4,7 @@ export default {
     'securityImage',
     'registration',
     'rememberMe',
-    'multiOptionalFactorEnroll'
+    'multiOptionalFactorEnroll',
+    'showPasswordToggleOnSignInPage'
 	]
 }
