@@ -194,8 +194,8 @@ app.post('/config', function(req, res, next) {
 });
 
 app.post('/api/v1/authn', function(req, res, next) {
-  if (config.config.filter(kv => kv.key === 'MFA_CHALLENGE').length > 0) {
-    const children = config.config.filter(kv => kv.key === 'MFA_CHALLENGE')[0].children;
+  if (config.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
+    const children = config.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
     console.log(config);
     console.log(children);
     const factors = children.map(child => {
