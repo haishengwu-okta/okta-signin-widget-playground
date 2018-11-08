@@ -104,8 +104,12 @@ class APIConfig extends React.Component {
 
     render() {
         return (
-            <div className="main-api-config">
-                <Header as='h2'>API Configuration</Header>
+            <div className="ui card">
+            <div className="main-api-config content">
+                <div className="header">
+                    <Header as='h2'>API Configuration</Header>
+                </div>
+                <div className="content">
                 <Header as='h3'>Transaction</Header>
                 <Tree
                     className=""
@@ -141,6 +145,8 @@ class APIConfig extends React.Component {
                   draggable
                   pauseOnHover
               />
+              </div>
+            </div>
             </div>
         );
     }

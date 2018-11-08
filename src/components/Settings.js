@@ -55,10 +55,14 @@ class Settings extends Component {
 
   render() {
     return (
+      <div className="ui card">
       <div className="Settings">
+        <div className="header">
         <Header as='h2'>Widget Settings</Header>
 
         <Header as='h3'>Features</Header>
+        </div>
+        <div className="content">
         <List>
           {
             checkboxItems.map((label) => {
@@ -85,6 +89,8 @@ class Settings extends Component {
             pauseOnHover
           />
         </div>
+        </div>
+      </div>
       </div>
     );
   }
