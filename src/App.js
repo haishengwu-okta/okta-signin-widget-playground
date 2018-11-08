@@ -14,7 +14,7 @@ class App extends Component {
       features: {
         router: true,
         rememberMe: true,
-        multiOptionalFactorEnroll: true,
+        multiOptionalFactorEnroll: true
     	}
     }
   }
@@ -34,6 +34,7 @@ class App extends Component {
   	console.log('features refreshed');
   	console.log(res);
     this.setState({
+			loginState: false,
       features: res
     })
   };

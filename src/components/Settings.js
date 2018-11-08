@@ -25,7 +25,13 @@ class Settings extends Component {
   }
 
   toggleCheckbox = label => {
-    defaultFeatures[label] = true;
+    if (this.selectedCheckboxes.has(label)) {
+      this.selectedCheckboxes.delete(label);
+      defaultFeatures[label] = false;
+    } else {
+      this.selectedCheckboxes.set(label);
+      defaultFeatures[label] = true;
+    }
     this.props.successFn(defaultFeatures);
   }
 

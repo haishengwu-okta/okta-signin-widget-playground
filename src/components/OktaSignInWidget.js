@@ -7,18 +7,29 @@ import '@okta/okta-signin-widget/dist/css/okta-theme.css';
 class OktaSignInWidget extends Component {
   static propTypes = {
     successFn: PropTypes.func,
-    featureOptions: PropTypes.obj
+    featureOptions: PropTypes.object
   };
   constructor (props) {
     super(props);
+  }
+
+  componentDidMount() {
+    this.renderWidget();
+  }
+
+  componentDidUpdate() {
+    console.log('component updated');
+    this.signIn.remove();
+    this.widgetEl.innerHTML = '';
+    this.renderWidget();
+  }
+
+  renderWidget() {
     this.signIn = new OktaSignIn({
       baseUrl: "http://localhost:8080/",
       logo: '/react.svg',
       features: this.props.featureOptions
     });
-  }
-
-  componentDidMount() {
     this.signIn.renderEl(
       { el: '#sign-in-widget' },
       this.props.successFn,
@@ -29,9 +40,10 @@ class OktaSignInWidget extends Component {
   }
 
   render() {
+    this.renderWidget();
     return (
       <div>
-        <div id="sign-in-widget" />
+        <div id="sign-in-widget" ref={el => this.widgetEl = el} />
       </div>
     );
   }
