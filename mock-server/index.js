@@ -360,6 +360,11 @@ app.post('/api/v1/authn/credentials/change_password', function(req, res, next) {
   res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
 });
 
+app.get('/login/getimage', function(req, res, next) {
+  res.json({"result":"success","pwdImg":"/img/security/hello.png","imageDescription":""});
+});
+
+
 app.listen(8080, function () {
   console.log('CORS-enabled web server listening on port 8080');
 });
