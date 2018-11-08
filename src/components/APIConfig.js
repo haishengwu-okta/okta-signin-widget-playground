@@ -2,13 +2,11 @@
 
 
 import React from 'react';
-import axios from 'axios';
 import Tree from 'rc-tree';
 import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
 
-const MOCK_API_SERVER = 'http://localhost:8080';
 
 const transactions = [
     {
@@ -74,7 +72,7 @@ const convertKeysToPostData = (keys) => {
 
 class APIConfig extends React.Component {
     static propTypes = {
-        successFn: PropTypes.func,
+        apiConfigFn: PropTypes.func,
       };
 
     constructor(props) {
@@ -85,23 +83,10 @@ class APIConfig extends React.Component {
 
     onCheck = (checkedKeys, info) => {
         this.keys = checkedKeys;
-    }
-
-    onSaveConfig = () => {
         const postDataKeys = convertKeysToPostData(this.keys);
 
-        axios.post(`${MOCK_API_SERVER}/config`, {
-            config: postDataKeys,
-          })
-          .then((response) => {
-            //console.log(response);
-            this.props.successFn(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-
-    };
+        this.props.apiConfigFn(postDataKeys);
+    }
 
     render() {
         return (
@@ -118,7 +103,6 @@ class APIConfig extends React.Component {
                     onCheck={this.onCheck}
                     treeData={treeData}
                 />
-                <button onClick={this.onSaveConfig}>Save</button>
             </div>
         );
     }

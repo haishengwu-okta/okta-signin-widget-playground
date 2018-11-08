@@ -3,46 +3,48 @@ import './App.css';
 import OktaSignInWidget from './components/OktaSignInWidget';
 import Settings from './components/Settings';
 import APIConfig from "./components/APIConfig";
-import LoginSuccess from './components/LoginSuccess';
+import axios from 'axios';
+
+const MOCK_API_SERVER = 'http://localhost:8080';
+
+const saveApiConfig = (postDataKeys) => {
+  axios.post(`${MOCK_API_SERVER}/config`, {
+    config: postDataKeys,
+  })
+    .then((response) => {
+      console.log('saved API config', response);
+    })
+    .catch((error) => {
+      console.log('API config error', error);
+    });
+}
 
 class App extends Component {
 
   constructor(options) {
     super(options);
     this.state = {
-      loginState: null,
-      features: {
-        router: true,
-        rememberMe: true,
-        multiOptionalFactorEnroll: true
-    	}
+      apiConfig: null,
+      signInWidgetOption: null,
     }
   }
 
-  apiConfigSuccessFn = (res) => {
-    this.setState({
-      loginState: null
-    })
+  apiConfigFn = (res) => {
+    saveApiConfig(res);
   }
-  loginSuccessFn = (res) => {
-    this.setState({
-      loginState: 'SUCCESS'
-    })
-  };
 
-  settingsSuccessFn = (res) => {
+  saveSignInWidgetOptions = (res) => {
     this.setState({
-			loginState: false,
-      features: res
-    })
+      signInWidgetOption: res
+    });
   };
 
   render() {
     return (
       <div className="App">
-        <Settings successFn={this.settingsSuccessFn}/>
-        <APIConfig successFn={this.apiConfigSuccessFn}/>
-        <OktaSignInWidget successFn={this.loginSuccessFn} featureOptions={this.state.features} />
+        <Settings settingChangedFn={this.saveSignInWidgetOptions} />
+        <APIConfig apiConfigFn={this.apiConfigFn} />
+        {this.state.signInWidgetOption && <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption} />}
       </div>
     );
   }

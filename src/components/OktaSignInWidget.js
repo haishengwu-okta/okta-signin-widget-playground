@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
+import LoginSuccess from "./LoginSuccess";
 
 class OktaSignInWidget extends Component {
   static propTypes = {
-    successFn: PropTypes.func,
-    featureOptions: PropTypes.object
+    signInWidgetOption: PropTypes.object
   };
   constructor (props) {
     super(props);
+    this.state = {
+      loginState: null
+    }
   }
 
   componentDidMount() {
@@ -18,29 +21,41 @@ class OktaSignInWidget extends Component {
   }
 
   componentDidUpdate() {
-    this.signIn.remove();
     this.renderWidget();
   }
 
-  renderWidget() {
-    this.signIn = new OktaSignIn({
-      baseUrl: "http://localhost:8080/",
-      logo: '/react.svg',
-      features: this.props.featureOptions
+  loginSuccess = (res) => {
+    this.setState({
+      loginState: res.status
     });
+  }
+
+  loginError = (res) => {
+    console.error('sign in widget login error', res);
+  }
+
+  renderWidget() {
+    if (this.signIn) {
+      this.signIn.remove();
+    }
+    this.signIn = new OktaSignIn(this.props.signInWidgetOption);
     this.signIn.renderEl(
       { el: '#sign-in-widget' },
-      this.props.successFn,
-      (err) => {
-        throw err;
-      },
+      this.loginSuccess,
+      this.loginError
     );
   }
 
   render() {
+    let mainComponent;
+    if (this.state.loginState === 'SUCCESS') {
+      mainComponent = <LoginSuccess />;
+    } else {
+      mainComponent = <div id="sign-in-widget" />;
+    }
     return (
       <div>
-        <div id="sign-in-widget" ref={el => this.widgetEl = el} />
+        {mainComponent}
       </div>
     );
   }

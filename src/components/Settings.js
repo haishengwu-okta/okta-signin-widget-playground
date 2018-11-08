@@ -1,38 +1,43 @@
 import React, { Component } from 'react';
-import widgetConfig from '../config/widgetConfig';
-import Checkbox from './Checkbox';
+import SettingsConfig from './SettingsConfig';
+import Checkbox from './forms/Checkbox';
 import PropTypes from 'prop-types';
 import './Settings.css';
 
-const checkboxItems = widgetConfig.features;
-const defaultFeatures = {
+const checkboxItems = SettingsConfig.features;
+
+const signInWidgetOption = {
+  baseUrl: "http://localhost:8080",
+  logo: '/logo.svg',
+  features: {
     router: true,
-    rememberMe: true,
-    multiOptionalFactorEnroll: true
+  },
 };
 
 class Settings extends Component {
+
   static propTypes = {
-    successFn: PropTypes.func,
+    settingChangedFn: PropTypes.func,
   };
 
-  constructor (props) {
-    super(props);
+  constructor(opt) {
+    super(opt);
+    this.selectedCheckboxes = new Map();
   }
 
-  componentWillMount = () => {
-    this.selectedCheckboxes = new Map();
+  componentDidMount() {
+    this.props.settingChangedFn(signInWidgetOption);
   }
 
   toggleCheckbox = label => {
     if (this.selectedCheckboxes.has(label)) {
       this.selectedCheckboxes.delete(label);
-      defaultFeatures[label] = false;
+      signInWidgetOption.features[label] = false;
     } else {
       this.selectedCheckboxes.set(label);
-      defaultFeatures[label] = true;
+      signInWidgetOption.features[label] = true;
     }
-    this.props.successFn(defaultFeatures);
+    this.props.settingChangedFn(signInWidgetOption);
   }
 
   createCheckbox = label => (

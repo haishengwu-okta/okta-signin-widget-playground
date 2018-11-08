@@ -1,4 +1,6 @@
 
 .Settings {
-    float: right;
-  }
+  right: 0;
+  position: absolute;
+  padding: 5px;
+}
