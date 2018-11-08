@@ -214,6 +214,10 @@ app.post('/api/v1/authn', function(req, res, next) {
     res.status(401);
     res.json(mkError("Authentication failed"));
   }
+  else if (mockSettings.config.filter(kv => kv.key === 'LOCKED_OUT').length > 0) {
+    res.status(401);
+    res.json({"errorCode":"E0000004","errorSummary":"Authentication failed","errorLink":"E0000004","errorId":"oaekwcV6TNhSNCPaSBpIjGEkA","errorCauses":[]});
+  }
   else if (mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
     const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
     console.log(mockSettings);
