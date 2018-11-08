@@ -3,6 +3,7 @@ import './App.css';
 import OktaSignInWidget from './components/OktaSignInWidget';
 import Settings from './components/Settings';
 import APIConfig from "./components/APIConfig";
+import Footer from "./components/Footer";
 import { save as saveApiConfig } from './api/config';
 import { Grid } from 'semantic-ui-react'
 
@@ -32,10 +33,10 @@ class App extends Component {
   render() {
     return (
       <Grid>
-        <Grid.Column floated='left' width={2}>
-          <APIConfig apiConfigFn={this.apiConfigFn} />
+        <Grid.Column floated='right' width={4}>
+          <Settings settingChangedFn={this.saveSignInWidgetOptions} />
         </Grid.Column>
-        <Grid.Column width={4}>
+        <Grid.Column width={5} floated='left'>
           {
             this.state.signInWidgetOption &&
             <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption}
@@ -43,10 +44,13 @@ class App extends Component {
             />
           }
         </Grid.Column>
-        <Grid.Column floated='right' width={3}>
-          <Settings settingChangedFn={this.saveSignInWidgetOptions} />
+        <Grid.Column floated='left' width={5}>
+          <APIConfig apiConfigFn={this.apiConfigFn} />
         </Grid.Column>
+        <Footer
+        />
       </Grid>
+
     );
   }
 }

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import SettingsConfig from './SettingsConfig';
 import PropTypes from 'prop-types';
 import './Settings.css';
-import { Header, List, Checkbox, Popup, Divider, Form } from 'semantic-ui-react'
+import { Header, List, Checkbox, Popup, Divider, Form, Card } from 'semantic-ui-react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const checkboxItems = SettingsConfig.features;
@@ -44,8 +44,8 @@ class Settings extends Component {
   updateBaseUrl = (event) => {
     const inputValue = event.currentTarget.value;
     if (inputValue.indexOf('http') === 0) {
-        signInWidgetOption.baseUrl = inputValue;
-        this.updateSignInWidget();
+      signInWidgetOption.baseUrl = inputValue;
+      this.updateSignInWidget();
     }
   }
 
@@ -57,51 +57,52 @@ class Settings extends Component {
 
   render() {
     return (
-      <div className="Settings">
-        <Header as='h2'>Widget Settings</Header>
+      <Card className="settings">
+        <Card.Content>
+          <Header as='h2'>Widget Settings</Header>
 
-        <Form size="small">
+          <Form size="small">
 
-          <Header as='h3'>Features</Header>
-          <Form.Field>
-            <List>
-              {
-                checkboxItems.map((label) => {
-                  return <List.Item key={label}>
-                    <Checkbox label={label} onChange={this.toggleCheckbox} />
-                  </List.Item>
-                })
-              }
-            </List>
-          </Form.Field>
+            <Header as='h3'>Features</Header>
+            <Form.Field>
+              <List>
+                {
+                  checkboxItems.map((label) => {
+                    return <List.Item key={label}>
+                      <Checkbox label={label} onChange={this.toggleCheckbox} />
+                    </List.Item>
+                  })
+                }
+              </List>
+            </Form.Field>
 
-          <Divider />
+            <Divider />
 
-          <Form.Field>
-            <Popup trigger={<Form.Input label="Base URL" onBlur={this.updateBaseUrl} placeholder="okta domain url"/> }>
-              Specify a base url to bootstrap the widget
+            <Form.Field>
+              <Popup trigger={<Form.Input label="Base URL" onBlur={this.updateBaseUrl} placeholder="okta domain url" />}>
+                Specify a base url to bootstrap the widget
             </Popup>
-          </Form.Field>
+            </Form.Field>
 
-          <Form.Field>
-            <Form.Input label="State Token" placeholder="" onBlur={this.updateStateToken} />
-          </Form.Field>
+            <Form.Field>
+              <Form.Input label="State Token" placeholder="" onBlur={this.updateStateToken} />
+            </Form.Field>
 
-        </Form>
+          </Form>
 
-        <ToastContainer
-          position="top-center"
-          autoClose={1000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange
-          draggable
-          pauseOnHover
-        />
-
-      </div>
+          <ToastContainer
+            position="top-center"
+            autoClose={1000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+        </Card.Content>
+      </Card>
     );
   }
 }

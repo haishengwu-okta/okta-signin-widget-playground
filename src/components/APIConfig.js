@@ -6,7 +6,7 @@ import Tree from 'rc-tree';
 import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
-import { Header } from 'semantic-ui-react'
+import { Header, Card } from 'semantic-ui-react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -82,7 +82,7 @@ const convertKeysToPostData = (keys) => {
 class APIConfig extends React.Component {
     static propTypes = {
         apiConfigFn: PropTypes.func,
-      };
+    };
 
     constructor(props) {
         super(props);
@@ -91,7 +91,7 @@ class APIConfig extends React.Component {
     }
 
     notify = (message) => {
-      toast.info(message);
+        toast.info(message);
     }
 
     onCheck = (checkedKeys, info) => {
@@ -104,44 +104,46 @@ class APIConfig extends React.Component {
 
     render() {
         return (
-            <div className="main-api-config">
-                <Header as='h2'>API Configuration</Header>
-                <Header as='h3'>Transaction</Header>
-                <Tree
-                    className=""
-                    showIcon={false}
-                    showLine={false}
-                    checkable
-                    selectable={false}
-                    defaultExpandAll
-                    onExpand={this.onExpand}
-                    onCheck={this.onCheck}
-                    treeData={treeDataTransactions}
-                />
-                <Header as='h3'>Registration</Header>
-                <Tree
-                    className=""
-                    showIcon={false}
-                    showLine={false}
-                    checkable
-                    selectable={false}
-                    defaultExpandAll
-                    onExpand={this.onExpand}
-                    onCheck={this.onCheck}
-                    treeData={treeDataRegistrations}
-                />
-                <ToastContainer
-                  position="top-center"
-                  autoClose={1000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnVisibilityChange
-                  draggable={false}
-                  pauseOnHover={false}
-              />
-            </div>
+            <Card className="main-api-config">
+                <Card.Content>
+                    <Header as='h2'>API Configuration</Header>
+                    <Header as='h3'>Transaction</Header>
+                    <Tree
+                        className=""
+                        showIcon={false}
+                        showLine={false}
+                        checkable
+                        selectable={false}
+                        defaultExpandAll
+                        onExpand={this.onExpand}
+                        onCheck={this.onCheck}
+                        treeData={treeDataTransactions}
+                    />
+                    <Header as='h3'>Registration</Header>
+                    <Tree
+                        className=""
+                        showIcon={false}
+                        showLine={false}
+                        checkable
+                        selectable={false}
+                        defaultExpandAll
+                        onExpand={this.onExpand}
+                        onCheck={this.onCheck}
+                        treeData={treeDataRegistrations}
+                    />
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={1000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnVisibilityChange
+                        draggable={false}
+                        pauseOnHover={false}
+                    />
+                </Card.Content>
+            </Card>
         );
     }
 }
