@@ -1,10 +1,13 @@
 export default {
   // FEATURES
-  features: [
-    'securityImage',
+    // 'multiOptionalFactorEnroll',
+    features: [
+    'autoPush',
+    'emailRecovery',
     'registration',
     'rememberMe',
-    'multiOptionalFactorEnroll',
-    'showPasswordToggleOnSignInPage'
+    'securityImage',
+    'selfServiceUnlock',
+    'showPasswordToggleOnSignInPage',
 	]
 }

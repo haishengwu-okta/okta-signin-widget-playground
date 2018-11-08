@@ -27,13 +27,14 @@ class OktaSignInWidget extends Component {
   }
 
   loginSuccess = (res) => {
-    if (this.state.loginState === 'ACTIVATION_EMAIL_SENT') {
-      // to show the reg email verification screen
-      return false;
+    if (res.status === 'SUCCESS') {
+      this.setState({
+        loginState: res.status
+      });
     }
-    this.setState({
-      loginState: res.status
-    });
+    // for other status, stay what widget ends up.
+    // e.g. ['ACTIVATION_EMAIL_SENT', 'UNLOCK_ACCOUNT_EMAIL_SENT']
+
   }
 
   loginError = (res) => {

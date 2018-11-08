@@ -28,6 +28,32 @@ const mkError = (errorSummary = "", errorCausesSummary = []) => {
 let mockSettings = {
   config: []
 };
+
+const accountStatus = {
+  LOCKED_OUT: {
+    "status":"LOCKED_OUT",
+    "_embedded":{ },
+    "_links":{
+      "next":{
+        "name":"unlock",
+        "href":"http://localhost:8081/api/v1/authn/recovery/unlock",
+        "hints":{
+          "allow":[
+            "POST"
+          ]
+        }
+      },
+      "cancel":{
+        "href":"http://localhost:8081/api/v1/authn/cancel",
+        "hints":{
+          "allow":[
+            "POST"
+          ]
+        }
+      }
+    }
+  }
+}
 const factorObjects = {
   OKTA_SECURITY_QUESTION: {
     "id": "ufs2cqqeDQpd1Y3QJ0g4",
@@ -210,13 +236,10 @@ app.post('/config', function(req, res, next) {
 });
 
 app.post('/api/v1/authn', function(req, res, next) {
-  if (!mockSettings.config) {
-    res.status(401);
-    res.json(mkError("Authentication failed"));
-  }
-  else if (mockSettings.config.filter(kv => kv.key === 'LOCKED_OUT').length > 0) {
-    res.status(401);
-    res.json({"errorCode":"E0000004","errorSummary":"Authentication failed","errorLink":"E0000004","errorId":"oaekwcV6TNhSNCPaSBpIjGEkA","errorCauses":[]});
+  console.log(mockSettings.config);
+
+  if (mockSettings.config.filter(kv => kv.key === 'LOCKED_OUT').length > 0) {
+    res.json(accountStatus['LOCKED_OUT']);
   }
   else if (mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
     const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
@@ -312,6 +335,15 @@ app.post('/api/v1/registration/reg3h8seELACUgy3p0g4/register', function(req, res
     res.status(401);
     res.json(mkError("Not Supported Registration"));
   }
+});
+
+app.post('/api/v1/authn/recovery/unlock', function(req, res, netx) {
+  res.json({
+    factorResult: "WAITING",
+    factorType: "EMAIL",
+    recoveryType: "UNLOCK",
+    status: "RECOVERY_CHALLENGE"
+  });
 });
 
 app.post('/api/v1/authn/cancel', function(req, res, next) {
