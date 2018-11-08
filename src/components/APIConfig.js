@@ -4,6 +4,7 @@
 import React from 'react';
 import axios from 'axios';
 import Tree from 'rc-tree';
+import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
 
@@ -11,7 +12,7 @@ const MOCK_API_SERVER = 'http://localhost:8080';
 
 const transactions = [
     {
-        key: 'MFA_CHALLENGE',
+        key: 'MFA_REQUIRED',
         children: [
             'GOOGLE_TOTP',
             'OKTA_PUSH',
@@ -22,25 +23,31 @@ const transactions = [
         ],
     },
     {
-        key: 'MFA_VERIFY',
-        children: [
-            'OKTA_SMS',
-            'OKTA_SECURITY_QUESTION'
-        ],
+        key: 'LOCKED_OUT'
+    },
+    {
+        key: 'PASSWORD_EXPIRED'
+    },
+    {
+        key: 'PASSWORD_WARN'
     },
     {
         key: 'SUCCESS'
-    }
+    },
+
 ];
-// LOCKED_OUT
-// PASSWORD_EXPIRED
+
+//
+//
 // PASSWORD_RESET
-// PASSWORD_WARN,
 // RECOVERY,
 // RECOVERY_CHALLENGE,
+//
 // MFA_ENROLL,
 // MFA_ENROLL_ACTIVATE,
 // MFA_REQUIRED,
+//
+//
 
 const treeData = transactions.map((obj) => {
     const children = Array.isArray(obj.children) ? obj.children.map((x) => {
@@ -66,6 +73,10 @@ const convertKeysToPostData = (keys) => {
 }
 
 class APIConfig extends React.Component {
+    static propTypes = {
+        successFn: PropTypes.func,
+      };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -73,7 +84,6 @@ class APIConfig extends React.Component {
     }
 
     onCheck = (checkedKeys, info) => {
-        // console.log('onCheck', checkedKeys, info);
         this.keys = checkedKeys;
     }
 
@@ -83,10 +93,11 @@ class APIConfig extends React.Component {
         axios.post(`${MOCK_API_SERVER}/config`, {
             config: postDataKeys,
           })
-          .then(function (response) {
-            console.log(response);
+          .then((response) => {
+            //console.log(response);
+            this.props.successFn(response.data);
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log(error);
           });
 

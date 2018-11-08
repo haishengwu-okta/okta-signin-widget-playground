@@ -1,5 +1,6 @@
 .main-api-config {
     position: absolute;
+    padding: 5px;
 }
 button {
     width: 100px;
