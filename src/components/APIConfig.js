@@ -6,6 +6,7 @@ import Tree from 'rc-tree';
 import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
+import { Header } from 'semantic-ui-react'
 
 
 const transactions = [
@@ -25,14 +26,14 @@ const transactions = [
     },
 
     {
-        key: 'PASSWORD_WARN'
-    },
-    {
         key: 'SUCCESS'
     },
 
 ];
 
+// {
+//     key: 'PASSWORD_WARN'
+// },
 // {
 //     key: 'PASSWORD_EXPIRED'
 // },
@@ -92,7 +93,7 @@ class APIConfig extends React.Component {
     render() {
         return (
             <div className="main-api-config">
-                <h2>API Configuration</h2>
+                <Header as='h2'>API Configuration</Header>
                 <Tree
                     className="myCls"
                     showIcon={false}

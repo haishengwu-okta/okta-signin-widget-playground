@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import SettingsConfig from './SettingsConfig';
-import Checkbox from './forms/Checkbox';
+// import Checkbox from './forms/Checkbox';
 import PropTypes from 'prop-types';
 import './Settings.css';
+import { Header, List, Checkbox } from 'semantic-ui-react'
 
 const checkboxItems = SettingsConfig.features;
 
@@ -29,40 +30,26 @@ class Settings extends Component {
     this.props.settingChangedFn(signInWidgetOption);
   }
 
-  toggleCheckbox = label => {
-    if (this.selectedCheckboxes.has(label)) {
-      this.selectedCheckboxes.delete(label);
-      signInWidgetOption.features[label] = false;
-    } else {
-      this.selectedCheckboxes.set(label);
-      signInWidgetOption.features[label] = true;
-    }
+  toggleCheckbox = (event, checkboxItem) => {
+    signInWidgetOption.features[checkboxItem.label] = checkboxItem.checked;
     this.props.settingChangedFn(signInWidgetOption);
   }
-
-  createCheckbox = label => (
-    <Checkbox
-      label={label}
-      handleCheckboxChange={this.toggleCheckbox}
-      key={label}
-    />
-  )
-
-  createCheckboxes = () => (
-    checkboxItems.map(this.createCheckbox)
-  )
 
   render() {
     return (
       <div className="Settings">
-        <h2>Widget Settings</h2>
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-12">
-                {this.createCheckboxes()}
-            </div>
-          </div>
-        </div>
+        <Header as='h2'>Widget Settings</Header>
+
+        <Header as='h3'>Features</Header>
+        <List>
+          {
+            checkboxItems.map((label) => {
+              return <List.Item key={label}>
+                       <Checkbox label={label} onChange={this.toggleCheckbox} />
+                     </List.Item>
+            })
+          }
+        </List>
       </div>
     );
   }

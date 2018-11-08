@@ -3,7 +3,8 @@ import './App.css';
 import OktaSignInWidget from './components/OktaSignInWidget';
 import Settings from './components/Settings';
 import APIConfig from "./components/APIConfig";
-import {save as saveApiConfig } from './api/config';
+import { save as saveApiConfig } from './api/config';
+import { Grid } from 'semantic-ui-react'
 
 
 class App extends Component {
@@ -31,16 +32,32 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Settings settingChangedFn={this.saveSignInWidgetOptions} />
-        <APIConfig apiConfigFn={this.apiConfigFn} />
-        {
-          this.state.signInWidgetOption &&
+      <Grid>
+        <Grid.Column floated='left' width={2}>
+          <APIConfig apiConfigFn={this.apiConfigFn} />
+        </Grid.Column>
+        <Grid.Column width={4}>
+          {
+            this.state.signInWidgetOption &&
             <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption}
-                              apiMockChanged={this.state.apiMockChanged}
+              apiMockChanged={this.state.apiMockChanged}
             />
           }
-      </div>
+        </Grid.Column>
+        <Grid.Column floated='right' width={2}>
+          <Settings settingChangedFn={this.saveSignInWidgetOptions} />
+        </Grid.Column>
+      </Grid>
+      // <div className="App">
+      //   <Settings settingChangedFn={this.saveSignInWidgetOptions} />
+      //   <APIConfig apiConfigFn={this.apiConfigFn} />
+      //   {
+      //     this.state.signInWidgetOption &&
+      //       <OktaSignInWidget signInWidgetOption={this.state.signInWidgetOption}
+      //                         apiMockChanged={this.state.apiMockChanged}
+      //       />
+      //     }
+      // </div>
     );
   }
 }
