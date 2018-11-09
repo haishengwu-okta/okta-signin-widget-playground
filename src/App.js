@@ -35,7 +35,7 @@ class App extends Component {
       <div style={{
         display: 'flex',
         justifyContent: 'center',
-        paddingTop: '10em'
+        paddingTop: '5em'
       }}>
           <Settings settingChangedFn={this.saveSignInWidgetOptions} />
           {
