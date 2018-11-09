@@ -6,7 +6,7 @@ import './LoginSuccess.css';
 function LoginSuccess (props) {
     return (
         <div className="login-success">
-            <h2>Welcome to Okta!</h2>
+            <h2 style={{color: 'white'}}>Welcome to Okta!</h2>
             <Button onClick={props.logoutFn}>Logout</Button>
         </div>
     )
