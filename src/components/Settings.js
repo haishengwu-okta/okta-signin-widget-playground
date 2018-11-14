@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import SettingsConfig from './SettingsConfig';
 import PropTypes from 'prop-types';
 import './Settings.css';
-import { Header, List, Checkbox, Popup, Divider, Form, Card } from 'semantic-ui-react'
+import { Header, List, Checkbox, Popup, Divider, Form, Card } from 'semantic-ui-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Constants from '../util/Constants';
+
 const checkboxItems = SettingsConfig.features;
 
 const signInWidgetOption = {
-  baseUrl: "http://localhost:8080",
+  baseUrl: Constants.MOCK_SERVER,
   logo: '/img/logo.svg',
   features: {
     router: true,

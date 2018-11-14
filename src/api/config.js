@@ -1,11 +1,10 @@
 import axios from 'axios';
-
-const MOCK_API_SERVER = 'http://localhost:8080';
+import Constants from '../util/Constants';
 
 const save = async (config) => {
 
     try {
-        const response = axios.post(`${MOCK_API_SERVER}/config`, {
+        const response = axios.post(`${Constants.MOCK_SERVER}/config`, {
             config,
         });
         console.log('saved API config', response);

@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:4001',
   credentials: true,
   allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept, X-Okta-User-Agent-Extended, X-Okta-XsrfToken',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -395,6 +395,6 @@ app.get('/login/getimage', function(req, res, next) {
 });
 
 
-app.listen(8080, function () {
-  console.log('CORS-enabled web server listening on port 8080');
+app.listen(9191, function () {
+  console.log('CORS-enabled web server listening on port 9191');
 });

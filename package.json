@@ -20,8 +20,8 @@
     "semantic-ui-react": "^0.83.0"
   },
   "scripts": {
-    "start-mock": "nodemon mock-server/index.js",
-    "start": "react-scripts start",
+    "start-mock": "cd mock-server && nodemon index.js",
+    "start": "PORT=4001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
