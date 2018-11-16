@@ -233,6 +233,23 @@ const factorObjects = {
               }
           }
       }
+  },
+  FIDO: {
+    "id": "webauthnFactorId",
+    "factorType": "webauthn",
+    "provider": "FIDO",
+    "vendorName": "FIDO",
+    "profile": {"credentialId": "credentialId"},
+    "_embedded": {"challenge": {"nonce": "NONCE", "timeoutSeconds": 20}},
+    "_links": {
+      "next": {
+        "name": "verify",
+        "href": "https://foo.com/api/v1/authn/factors/webauthnFactorId/verify",
+        "hints": {"allow": ["POST"]}
+      },
+      "cancel": {"href": "https://foo.com/api/v1/authn/cancel", "hints": {"allow": ["POST"]}},
+      "prev": {"href": "https://foo.com/api/v1/authn/previous", "hints": {"allow": ["POST"]}}
+    }
   }
 }
 

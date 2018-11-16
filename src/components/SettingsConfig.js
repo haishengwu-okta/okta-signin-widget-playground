@@ -2,6 +2,7 @@ export default {
   // FEATURES
     // 'multiOptionalFactorEnroll',
     features: [
+      'router',
     'autoPush',
     'emailRecovery',
     'registration',

@@ -9,7 +9,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Constants from '../util/Constants';
 
 const checkboxItems = SettingsConfig.features;
-
+const languageOptions = [
+  { key: 'en', value: 'en', flag: 'us', text: 'English' },
+  { key: 'fr', value: 'fr', flag: 'fr', text: 'France' },
+  { key: 'zh-CN', value: 'zh-CN', flag: 'cn', text: 'zh-CN' },
+]
 const signInWidgetOption = {
   baseUrl: Constants.MOCK_SERVER,
   logo: '/img/logo.svg',
@@ -58,6 +62,11 @@ class Settings extends Component {
     this.updateSignInWidget();
   };
 
+  updateLanguage = (event, { value }) => {
+    signInWidgetOption.language = value;
+    this.updateSignInWidget();
+  }
+
   render() {
     return (
       <Card className="settings">
@@ -89,6 +98,10 @@ class Settings extends Component {
 
             <Form.Field>
               <Form.Input label="State Token" placeholder="" onBlur={this.updateStateToken} />
+            </Form.Field>
+
+            <Form.Field>
+              <Form.Select label='Select your language' options={languageOptions} onChange={this.updateLanguage} />
             </Form.Field>
 
           </Form>

@@ -15,6 +15,7 @@ const transactions = [
     {
         key: 'MFA_REQUIRED',
         children: [
+            'FIDO',
             'GOOGLE_TOTP',
             'OKTA_PUSH',
             'OKTA_SMS',
