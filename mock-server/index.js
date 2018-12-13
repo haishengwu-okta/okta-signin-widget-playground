@@ -105,7 +105,7 @@ const accountStatus = {
     "_links": {
       "next": {
         "name": "changePassword",
-        "href": "https://foo.com/api/v1/authn/credentials/change_password",
+        "href": "http://localhost:9001/api/v1/authn/credentials/change_password",
         "hints": {
           "allow": [
             "POST"
@@ -114,7 +114,7 @@ const accountStatus = {
       },
       "skip": {
         "name": "skip",
-        "href": "https://foo.com/api/v1/authn/skip",
+        "href": "http://localhost:9001/api/v1/authn/skip",
         "hints": {
           "allow": [
             "POST"
@@ -122,7 +122,7 @@ const accountStatus = {
         }
       },
       "cancel": {
-        "href": "https://foo.com/api/v1/authn/cancel",
+        "href": "http://localhost:9001/api/v1/authn/cancel",
         "hints": {
           "allow": [
             "POST"
@@ -166,7 +166,7 @@ const accountStatus = {
     "_links": {
       "next": {
         "name": "changePassword",
-        "href": "http://localhost:8080/api/v1/authn/credentials/change_password",
+        "href": "http://localhost:9191/api/v1/authn/credentials/change_password",
         "hints": {
           "allow": [
             "POST"
@@ -174,7 +174,91 @@ const accountStatus = {
         }
       },
       "cancel": {
-        "href": "http://localhost:8080/api/v1/authn/cancel",
+        "href": "http://localhost:9191/api/v1/authn/cancel",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      }
+    }
+  },
+
+  PASSWORD_RESET: {
+    "stateToken": "testStateToken",
+    "expiresAt": "2015-07-17T02:33:34.874Z",
+    "status": "PASSWORD_RESET",
+    "_embedded": {
+      "user": {
+        "id": "00uhveDu5xF26YA0j0g3",
+        "profile": {
+          "login": "administrator1@clouditude.net",
+          "firstName": "Add-Min",
+          "lastName": "O'Cloudy Tud",
+          "locale": "en_US",
+          "timeZone": "America/Los_Angeles"
+        }
+      }
+    },
+    "_links": {
+      "next": {
+        "name": "resetPassword",
+        "href": "http://localhost:9001/api/v1/authn/credentials/reset_password",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      },
+      "cancel": {
+        "href": "http://localhost:9001/api/v1/authn/cancel",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      }
+    }
+  },
+
+  RECOVERY_CHALLENGE: {
+    // factorResult: "WAITING",
+    factorType: "SMS", // [SMS, CALL, EMAIL]
+    recoveryType: "UNLOCK", // [UNLOCK, PASSWORD]
+    status: "RECOVERY_CHALLENGE"
+  },
+
+  RECOVERY: {
+    "stateToken": "testStateToken",
+    "status": "RECOVERY",
+    "recoveryType": "UNLOCK", // [UNLOCK, PASSWORD]
+    "_embedded": {
+      "user": {
+        "id": "00uhveDu5xF26YA0j0g3",
+        "profile": {
+          "login": "administrator1@clouditude.net",
+          "firstName": "Add-Min",
+          "lastName": "O'Cloudy Tud",
+          "locale": "en_US",
+          "timeZone": "America/Los_Angeles"
+        },
+        "recovery_question": {
+          "question": "Last 4 digits of your social security number?"
+        }
+      }
+    },
+    "_links": {
+      "next": {
+        "name": "answer",
+        "href": "http://localhost:9001/api/v1/authn/recovery/answer",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      },
+      "cancel": {
+        "href": "http://localhost:9001/api/v1/authn/cancel",
         "hints": {
           "allow": [
             "POST"
@@ -196,7 +280,7 @@ const factorObjects = {
     },
     "_links": {
       "verify": {
-        "href": "http://localhost:8080/api/v1/authn/factors/ufs2cqqeDQpd1Y3QJ0g4/verify",
+        "href": "http://localhost:9191/api/v1/authn/factors/ufs2cqqeDQpd1Y3QJ0g4/verify",
         "hints": {
           "allow": ["POST"]
         }
@@ -215,7 +299,7 @@ const factorObjects = {
     },
     "_links": {
       "verify": {
-        "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN/verify",
+        "href": "http://localhost:9191/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN/verify",
         "hints": {
           "allow": [
             "POST"
@@ -223,7 +307,7 @@ const factorObjects = {
         }
       },
       "self": {
-        "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN",
+        "href": "http://localhost:9191/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN",
         "hints": {
           "allow": [
             "GET",
@@ -232,7 +316,7 @@ const factorObjects = {
         }
       },
       "user": {
-        "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL",
+        "href": "http://localhost:9191/api/v1/users/00u15s1KDETTQMQYABRL",
         "hints": {
           "allow": [
             "GET"
@@ -247,7 +331,7 @@ const factorObjects = {
     "provider": "GOOGLE",
     "_links": {
       "verify": {
-        "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN/verify",
+        "href": "http://localhost:9191/api/v1/users/00u15s1KDETTQMQYABRL/factors/sms2gt8gzgEBPUWBIFHN/verify",
         "hints": {
           "allow": [
             "POST"
@@ -255,7 +339,7 @@ const factorObjects = {
         }
       },
       "enroll": {
-        "href": "http://localhost:8080/api/v1/users/00u15s1KDETTQMQYABRL/factors",
+        "href": "http://localhost:9191/api/v1/users/00u15s1KDETTQMQYABRL/factors",
         "hints": {
           "allow": [
             "POST"
@@ -284,7 +368,7 @@ const factorObjects = {
     },
     "_links": {
       "verify": {
-        "href": "http://localhost:8080/api/v1/authn/factors/opf1emz8qeuVPx5El1d8/verify",
+        "href": "http://localhost:9191/api/v1/authn/factors/opf1emz8qeuVPx5El1d8/verify",
         "hints": {
           "allow": ["POST"]
         }
@@ -300,7 +384,7 @@ const factorObjects = {
     },
     "_links": {
       "verify": {
-        "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
+        "href": "http://localhost:9191/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
         "hints": {
           "allow": [
             "POST"
@@ -320,7 +404,7 @@ const factorObjects = {
     },
     "_links": {
       "verify": {
-        "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
+        "href": "http://localhost:9191/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
         "hints": {
           "allow": [
             "POST"
@@ -328,7 +412,7 @@ const factorObjects = {
         }
       },
       "activate": {
-        "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate",
+        "href": "http://localhost:9191/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate",
         "hints": {
           "allow": [
             "POST"
@@ -338,7 +422,7 @@ const factorObjects = {
       "resend": [
         {
           "name": "email",
-          "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/resend",
+          "href": "http://localhost:9191/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/resend",
           "hints": {
             "allow": [
               "POST"
@@ -347,7 +431,7 @@ const factorObjects = {
         }
       ],
       "self": {
-        "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3",
+        "href": "http://localhost:9191/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3",
         "hints": {
           "allow": [
             "GET"
@@ -355,7 +439,7 @@ const factorObjects = {
         }
       },
       "user": {
-        "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3",
+        "href": "http://localhost:9191/api/v1/users/00umvfJKwXOQ1mEL50g3",
         "hints": {
           "allow": [
             "GET"
@@ -374,11 +458,11 @@ const factorObjects = {
     "_links": {
       "next": {
         "name": "verify",
-        "href": "https://foo.com/api/v1/authn/factors/webauthnFactorId/verify",
+        "href": "http://localhost:9001/api/v1/authn/factors/webauthnFactorId/verify",
         "hints": { "allow": ["POST"] }
       },
-      "cancel": { "href": "https://foo.com/api/v1/authn/cancel", "hints": { "allow": ["POST"] } },
-      "prev": { "href": "https://foo.com/api/v1/authn/previous", "hints": { "allow": ["POST"] } }
+      "cancel": { "href": "http://localhost:9001/api/v1/authn/cancel", "hints": { "allow": ["POST"] } },
+      "prev": { "href": "http://localhost:9001/api/v1/authn/previous", "hints": { "allow": ["POST"] } }
     }
   }
 }
@@ -390,7 +474,9 @@ function finalReponse(res) {
     res.json({ "expiresAt": "2018-11-07T21:06:59.000Z", "status": "SUCCESS", "sessionToken": "20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A", "_embedded": { "user": { "id": "00uqbtiaptVVLmjCd0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "administrator1@clouditude.net", "firstName": "Add-Min", "lastName": "O'Cloudy Tud", "locale": "en", "timeZone": "America/Los_Angeles" } } } });
   } else {
     res.status(401);
-    res.json(mkError("Invalid value provided."));
+    res.json(mkError("Invalid value provided", [
+      "expect to mock 'SUCCESS' response but not checked."
+    ]));
   }
 }
 
@@ -411,6 +497,15 @@ app.post('/api/v1/authn', function (req, res, next) {
   }
   else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_EXPIRED').length > 0) {
     res.json(accountStatus['PASSWORD_EXPIRED']);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_RESET').length > 0) {
+    res.json(accountStatus['PASSWORD_RESET']);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'RECOVERY_CHALLENGE').length > 0) {
+    res.json(accountStatus['RECOVERY_CHALLENGE']);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'RECOVERY').length > 0) {
+    res.json(accountStatus['RECOVERY']);
   }
   else if (mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
     const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
@@ -465,7 +560,7 @@ app.post('/api/v1/authn', function (req, res, next) {
       },
       "_links": {
         "cancel": {
-          "href": "http://localhost:8080/api/v1/authn/cancel",
+          "href": "http://localhost:9191/api/v1/authn/cancel",
           "hints": {
             "allow": ["POST"]
           }
@@ -494,18 +589,22 @@ app.post('/api/v1/users/:userId/factors', function (req, res, next) {
 app.post('/api/v1/authn/factors/:factorId/verify', function (req, res, next) {
   const factorId = req.params.factorId;
   const factor = mockFactors.filter((f) => f.id === factorId);
+
+  console.log('factor verify:', factorId, factor.length);
+
   if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_EXPIRED').length > 0) {
-    res.json({ "stateToken": "00VXyMVirQsranoRXat5qOUSQ_J7WhGazAhW4Kssz2", "expiresAt": "2018-11-08T17:50:14.000Z", "status": "PASSWORD_EXPIRED", "_embedded": { "user": { "id": "00uqbxPh7V77mxdho0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "inca@clouditude.net", "firstName": "Inca-Louise", "lastName": "O'Rain Dum", "locale": "en", "timeZone": "America/Los_Angeles" } }, "policy": { "complexity": { "minLength": 8, "minLowerCase": 1, "minUpperCase": 1, "minNumber": 1, "minSymbol": 0, "excludeUsername": true }, "age": { "minAgeMinutes": 0, "historyCount": 0 } } }, "_links": { "next": { "name": "changePassword", "href": "http://localhost:8080/api/v1/authn/credentials/change_password", "hints": { "allow": ["POST"] } }, "cancel": { "href": "http://localhost:8080/api/v1/authn/cancel", "hints": { "allow": ["POST"] } } } });
+    res.json({ "stateToken": "00VXyMVirQsranoRXat5qOUSQ_J7WhGazAhW4Kssz2", "expiresAt": "2018-11-08T17:50:14.000Z", "status": "PASSWORD_EXPIRED", "_embedded": { "user": { "id": "00uqbxPh7V77mxdho0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "inca@clouditude.net", "firstName": "Inca-Louise", "lastName": "O'Rain Dum", "locale": "en", "timeZone": "America/Los_Angeles" } }, "policy": { "complexity": { "minLength": 8, "minLowerCase": 1, "minUpperCase": 1, "minNumber": 1, "minSymbol": 0, "excludeUsername": true }, "age": { "minAgeMinutes": 0, "historyCount": 0 } } }, "_links": { "next": { "name": "changePassword", "href": "http://localhost:9191/api/v1/authn/credentials/change_password", "hints": { "allow": ["POST"] } }, "cancel": { "href": "http://localhost:9191/api/v1/authn/cancel", "hints": { "allow": ["POST"] } } } });
   }
   else if (req.body.answer === 'fail') {
     res.status(403);
     res.json(mkError("Invalid Passcode/Answer", ["Your answer doesn't match our records. Please try again."]));
   }
   else if (factor.length === 1) {
+    // TODO: some factors shall generate MFA_CHALLENGE response
     finalReponse(res);
   } else {
     res.status(401);
-    res.json(mkError("Authentication failed"));
+    res.json(mkError("Authentication failed", ["unknown error at factors/verify"]));
   }
 });
 

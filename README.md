@@ -7,6 +7,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 ## TODO
 
+- [ ] response of
+  - `api/v1/authn/cancel`
+  - `api/v1/authn/skip`
 - [ ] bootstrap widget with state token
 - [ ] IDP Discovery flow
 - [ ] implement the OKTA PUSH, Google TOTP flow

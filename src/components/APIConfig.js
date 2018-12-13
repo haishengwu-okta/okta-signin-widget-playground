@@ -7,9 +7,6 @@ import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
 import { Header, Card } from 'semantic-ui-react'
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
-
 
 const transactions = [
     {
@@ -25,9 +22,6 @@ const transactions = [
         ],
     },
     {
-        key: 'UNLOCK'
-    },
-    {
         key: 'LOCKED_OUT'
     },
     {
@@ -37,7 +31,19 @@ const transactions = [
         key: 'PASSWORD_WARN'
     },
     {
+        key: 'PASSWORD_RESET'
+    },
+    {
+        key: 'RECOVERY_CHALLENGE'
+    },
+    {
+        key: 'RECOVERY'
+    },
+    {
         key: 'SUCCESS'
+    },
+    {
+        key: 'UNLOCK'
     },
 ];
 
@@ -49,13 +55,9 @@ const registrations = [
 
 //
 //
-// PASSWORD_RESET
-// RECOVERY,
-// RECOVERY_CHALLENGE,
-//
+// MFA_CHALLENGE,
 // MFA_ENROLL,
 // MFA_ENROLL_ACTIVATE,
-// MFA_REQUIRED,
 //
 //
 
@@ -95,16 +97,16 @@ class APIConfig extends React.Component {
         };
     }
 
-    // notify = (message) => {
-    //     toast.info(message);
-    // }
+    notify = (message) => {
+        console.debug(message);
+    }
 
     onCheck = (checkedKeys, info) => {
         this.keys = checkedKeys;
         const postDataKeys = convertKeysToPostData(this.keys);
 
         this.props.apiConfigFn(postDataKeys);
-        // this.notify("API Config updated");
+        this.notify("API Config updated");
     }
 
     render() {
@@ -136,17 +138,6 @@ class APIConfig extends React.Component {
                         onCheck={this.onCheck}
                         treeData={treeDataRegistrations}
                     />
-                    {/* <ToastContainer
-                        position="bottom-center"
-                        autoClose={1000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnVisibilityChange
-                        draggable={false}
-                        pauseOnHover={false}
-                    /> */}
                 </Card.Content>
             </Card>
         );
