@@ -3,12 +3,12 @@ export default {
     // 'multiOptionalFactorEnroll',
     features: [
       'router',
-    'autoPush',
-    'emailRecovery',
-    'registration',
-    'rememberMe',
-    'securityImage',
-    'selfServiceUnlock',
-    'showPasswordToggleOnSignInPage',
+      'autoPush',
+      'emailRecovery',
+      'registration',
+      'rememberMe',
+      'securityImage',
+      'selfServiceUnlock',
+      'showPasswordToggleOnSignInPage',
 	]
 }

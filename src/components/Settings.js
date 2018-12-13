@@ -18,8 +18,8 @@ const signInWidgetOption = {
   baseUrl: Constants.MOCK_SERVER,
   logo: '/img/logo.svg',
   features: {
-    router: true,
-    rememberMe: false,
+    // router: true,
+    // rememberMe: false,
   },
 };
 

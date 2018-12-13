@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 const mkError = (errorSummary = "", errorCausesSummary = []) => {
   return {
     errorCauses: errorCausesSummary.map((s) => {
-      return {errorSummary: s};
+      return { errorSummary: s };
     }),
     errorCode: "E0000000",
     errorId: "xxxyyyyzzz",
@@ -30,23 +30,153 @@ let mockSettings = {
 };
 
 const accountStatus = {
+  UNLOCK: {
+    "expiresAt": "2015-08-05T14:10:54.000Z",
+    "status": "SUCCESS",
+    "recoveryType": "UNLOCK",
+    "sessionToken": "THE_SESSION_TOKEN",
+    "_embedded": {
+      "user": {
+        "id": "00ui0jgywTAHxYGMM0g3",
+        "profile": {
+          "login": "administrator1@clouditude.net",
+          "firstName": "Add-Min",
+          "lastName": "O'Cloudy Tud",
+          "locale": "en_US",
+          "timeZone": "America/Los_Angeles"
+        }
+      }
+    }
+  },
+
   LOCKED_OUT: {
-    "status":"LOCKED_OUT",
-    "_embedded":{ },
-    "_links":{
-      "next":{
-        "name":"unlock",
-        "href":"http://localhost:8081/api/v1/authn/recovery/unlock",
-        "hints":{
-          "allow":[
+    "status": "LOCKED_OUT",
+    "_embedded": {},
+    "_links": {
+      "next": {
+        "name": "unlock",
+        "href": "http://localhost:8081/api/v1/authn/recovery/unlock",
+        "hints": {
+          "allow": [
             "POST"
           ]
         }
       },
-      "cancel":{
-        "href":"http://localhost:8081/api/v1/authn/cancel",
-        "hints":{
-          "allow":[
+      "cancel": {
+        "href": "http://localhost:8081/api/v1/authn/cancel",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      }
+    }
+  },
+
+  PASSWORD_WARN: {
+    "stateToken": "testStateToken",
+    "expiresAt": "2015-07-08T16:43:47.608Z",
+    "status": "PASSWORD_WARN",
+    "_embedded": {
+      "user": {
+        "id": "00uhuhIeUK9Htah8Z0g3",
+        "passwordChanged": "2015-06-28T01:05:35.000Z",
+        "profile": {
+          "login": "inca@clouditude.net",
+          "firstName": "Inca-Louise",
+          "lastName": "O'Rain Dum",
+          "locale": "en_US",
+          "timeZone": "America/Los_Angeles"
+        }
+      },
+      "policy": {
+        "expiration": {
+          "passwordExpireDays": 4
+        },
+        "complexity": {
+          "minLength": 8,
+          "minLowerCase": 1,
+          "minUpperCase": 1,
+          "minNumber": 1,
+          "minSymbol": 0
+        }
+      }
+    },
+    "_links": {
+      "next": {
+        "name": "changePassword",
+        "href": "https://foo.com/api/v1/authn/credentials/change_password",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      },
+      "skip": {
+        "name": "skip",
+        "href": "https://foo.com/api/v1/authn/skip",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      },
+      "cancel": {
+        "href": "https://foo.com/api/v1/authn/cancel",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      }
+    }
+  },
+
+  PASSWORD_EXPIRED: {
+    "stateToken": "00zXV_boPAtyUu3_5qFHugbilbW4y54PxWM0f1kNKT",
+    "expiresAt": "2018-11-08T18:01:23.000Z",
+    "status": "PASSWORD_EXPIRED",
+    "_embedded": {
+      "user": {
+        "id": "00uqbxPh7V77mxdho0g3",
+        "passwordChanged": "2018-10-09T22:20:02.000Z",
+        "profile": {
+          "login": "inca@clouditude.net",
+          "firstName": "Inca-Louise",
+          "lastName": "O'Rain Dum",
+          "locale": "en",
+          "timeZone": "America/Los_Angeles"
+        }
+      },
+      "policy": {
+        "complexity": {
+          "minLength": 8,
+          "minLowerCase": 1,
+          "minUpperCase": 1,
+          "minNumber": 1,
+          "minSymbol": 0,
+          "excludeUsername": true
+        },
+        "age": {
+          "minAgeMinutes": 0,
+          "historyCount": 0
+        }
+      }
+    },
+    "_links": {
+      "next": {
+        "name": "changePassword",
+        "href": "http://localhost:8080/api/v1/authn/credentials/change_password",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      },
+      "cancel": {
+        "href": "http://localhost:8080/api/v1/authn/cancel",
+        "hints": {
+          "allow": [
             "POST"
           ]
         }
@@ -162,93 +292,93 @@ const factorObjects = {
     }
   },
   OKTA_CALL: {
-     "id": "clf193zUBEROPBNZKPPE",
-     "factorType": "call",
-     "provider": "OKTA",
-     "profile": {
-       "phoneNumber": "+1 XXX-XXX-1337"
-     },
-     "_links": {
-       "verify": {
-         "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
-         "hints": {
-           "allow": [
-             "POST"
-            ]
-          }
+    "id": "clf193zUBEROPBNZKPPE",
+    "factorType": "call",
+    "provider": "OKTA",
+    "profile": {
+      "phoneNumber": "+1 XXX-XXX-1337"
+    },
+    "_links": {
+      "verify": {
+        "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
         }
-     }
+      }
+    }
   },
   OKTA_EMAIL: {
-      "id": "emfnf3gSScB8xXoXK0g3",
-      "factorType": "email",
-      "provider": "OKTA",
-      "vendorName": "OKTA",
-      "status": "PENDING_ACTIVATION",
-      "profile": {
-        "email": "foo@test.com",
+    "id": "emfnf3gSScB8xXoXK0g3",
+    "factorType": "email",
+    "provider": "OKTA",
+    "vendorName": "OKTA",
+    "status": "PENDING_ACTIVATION",
+    "profile": {
+      "email": "foo@test.com",
+    },
+    "_links": {
+      "verify": {
+        "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
       },
-      "_links": {
-        "verify": {
-          "href": "http://localhost:8080/api/v1/authn/factors/clf193zUBEROPBNZKPPE/verify",
+      "activate": {
+        "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate",
+        "hints": {
+          "allow": [
+            "POST"
+          ]
+        }
+      },
+      "resend": [
+        {
+          "name": "email",
+          "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/resend",
           "hints": {
             "allow": [
               "POST"
-             ]
-           }
-         },
-          "activate": {
-              "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/lifecycle/activate",
-              "hints": {
-                  "allow": [
-                      "POST"
-                  ]
-              }
-          },
-          "resend": [
-              {
-                  "name": "email",
-                  "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3/resend",
-                  "hints": {
-                      "allow": [
-                          "POST"
-                      ]
-                  }
-              }
-          ],
-          "self": {
-              "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3",
-              "hints": {
-                  "allow": [
-                      "GET"
-                  ]
-              }
-          },
-          "user": {
-              "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3",
-              "hints": {
-                  "allow": [
-                      "GET"
-                  ]
-              }
+            ]
           }
+        }
+      ],
+      "self": {
+        "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3/factors/emfnf3gSScB8xXoXK0g3",
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
+      },
+      "user": {
+        "href": "http://localhost:8080/api/v1/users/00umvfJKwXOQ1mEL50g3",
+        "hints": {
+          "allow": [
+            "GET"
+          ]
+        }
       }
+    }
   },
   FIDO: {
     "id": "webauthnFactorId",
     "factorType": "webauthn",
     "provider": "FIDO",
     "vendorName": "FIDO",
-    "profile": {"credentialId": "credentialId"},
-    "_embedded": {"challenge": {"nonce": "NONCE", "timeoutSeconds": 20}},
+    "profile": { "credentialId": "credentialId" },
+    "_embedded": { "challenge": { "nonce": "NONCE", "timeoutSeconds": 20 } },
     "_links": {
       "next": {
         "name": "verify",
         "href": "https://foo.com/api/v1/authn/factors/webauthnFactorId/verify",
-        "hints": {"allow": ["POST"]}
+        "hints": { "allow": ["POST"] }
       },
-      "cancel": {"href": "https://foo.com/api/v1/authn/cancel", "hints": {"allow": ["POST"]}},
-      "prev": {"href": "https://foo.com/api/v1/authn/previous", "hints": {"allow": ["POST"]}}
+      "cancel": { "href": "https://foo.com/api/v1/authn/cancel", "hints": { "allow": ["POST"] } },
+      "prev": { "href": "https://foo.com/api/v1/authn/previous", "hints": { "allow": ["POST"] } }
     }
   }
 }
@@ -257,26 +387,35 @@ let mockFactors;
 
 function finalReponse(res) {
   if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
-    res.json({"expiresAt":"2018-11-07T21:06:59.000Z","status":"SUCCESS","sessionToken":"20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A","_embedded":{"user":{"id":"00uqbtiaptVVLmjCd0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"administrator1@clouditude.net","firstName":"Add-Min","lastName":"O'Cloudy Tud","locale":"en","timeZone":"America/Los_Angeles"}}}});
+    res.json({ "expiresAt": "2018-11-07T21:06:59.000Z", "status": "SUCCESS", "sessionToken": "20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A", "_embedded": { "user": { "id": "00uqbtiaptVVLmjCd0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "administrator1@clouditude.net", "firstName": "Add-Min", "lastName": "O'Cloudy Tud", "locale": "en", "timeZone": "America/Los_Angeles" } } } });
   } else {
     res.status(401);
     res.json(mkError("Invalid value provided."));
   }
 }
 
-app.post('/config', function(req, res, next) {
+app.post('/config', function (req, res, next) {
   mockSettings = req.body;
-  res.json({success: 'success'});
+  res.json({ success: 'success' });
 });
 
-app.post('/api/v1/authn', function(req, res, next) {
+app.post('/api/v1/authn', function (req, res, next) {
   if (mockSettings.config.filter(kv => kv.key === 'LOCKED_OUT').length > 0) {
     res.json(accountStatus['LOCKED_OUT']);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'UNLOCK').length > 0) {
+    res.json(accountStatus['UNLOCK']);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN').length > 0) {
+    res.json(accountStatus['PASSWORD_WARN']);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_EXPIRED').length > 0) {
+    res.json(accountStatus['PASSWORD_EXPIRED']);
   }
   else if (mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED').length > 0) {
     const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
     mockFactors = children.map(child => factorObjects[child])
-                          .filter(factor => !!factor);
+      .filter(factor => !!factor);
     if (children.includes('OKTA_PUSH')) {
       mockFactors = mockFactors.concat({
         "id": "ost1emz8qetG6ttDr1d8",
@@ -334,9 +473,7 @@ app.post('/api/v1/authn', function(req, res, next) {
       }
     });
   }
-  else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN').length > 0) {
-    res.json({"stateToken":"00zXV_boPAtyUu3_5qFHugbilbW4y54PxWM0f1kNKT","expiresAt":"2018-11-08T18:01:23.000Z","status":"PASSWORD_EXPIRED","_embedded":{"user":{"id":"00uqbxPh7V77mxdho0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"inca@clouditude.net","firstName":"Inca-Louise","lastName":"O'Rain Dum","locale":"en","timeZone":"America/Los_Angeles"}},"policy":{"complexity":{"minLength":8,"minLowerCase":1,"minUpperCase":1,"minNumber":1,"minSymbol":0,"excludeUsername":true},"age":{"minAgeMinutes":0,"historyCount":0}}},"_links":{"next":{"name":"changePassword","href":"http://localhost:8080/api/v1/authn/credentials/change_password","hints":{"allow":["POST"]}},"cancel":{"href":"http://localhost:8080/api/v1/authn/cancel","hints":{"allow":["POST"]}}}});
-  }
+
   else if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
     finalReponse(res);
   }
@@ -346,23 +483,23 @@ app.post('/api/v1/authn', function(req, res, next) {
   }
 });
 
-app.post('/api/v1/users/:userId/factors/:factorId/verify', function(req, res, next) {
+app.post('/api/v1/users/:userId/factors/:factorId/verify', function (req, res, next) {
   finalReponse(res);
 });
 
-app.post('/api/v1/users/:userId/factors', function(req, res, next) {
+app.post('/api/v1/users/:userId/factors', function (req, res, next) {
   finalReponse(res);
 });
 
-app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
+app.post('/api/v1/authn/factors/:factorId/verify', function (req, res, next) {
   const factorId = req.params.factorId;
   const factor = mockFactors.filter((f) => f.id === factorId);
-  if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN').length > 0) {
-    res.json({"stateToken":"00VXyMVirQsranoRXat5qOUSQ_J7WhGazAhW4Kssz2","expiresAt":"2018-11-08T17:50:14.000Z","status":"PASSWORD_EXPIRED","_embedded":{"user":{"id":"00uqbxPh7V77mxdho0g3","passwordChanged":"2018-10-09T22:20:02.000Z","profile":{"login":"inca@clouditude.net","firstName":"Inca-Louise","lastName":"O'Rain Dum","locale":"en","timeZone":"America/Los_Angeles"}},"policy":{"complexity":{"minLength":8,"minLowerCase":1,"minUpperCase":1,"minNumber":1,"minSymbol":0,"excludeUsername":true},"age":{"minAgeMinutes":0,"historyCount":0}}},"_links":{"next":{"name":"changePassword","href":"http://localhost:8080/api/v1/authn/credentials/change_password","hints":{"allow":["POST"]}},"cancel":{"href":"http://localhost:8080/api/v1/authn/cancel","hints":{"allow":["POST"]}}}});
+  if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_EXPIRED').length > 0) {
+    res.json({ "stateToken": "00VXyMVirQsranoRXat5qOUSQ_J7WhGazAhW4Kssz2", "expiresAt": "2018-11-08T17:50:14.000Z", "status": "PASSWORD_EXPIRED", "_embedded": { "user": { "id": "00uqbxPh7V77mxdho0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "inca@clouditude.net", "firstName": "Inca-Louise", "lastName": "O'Rain Dum", "locale": "en", "timeZone": "America/Los_Angeles" } }, "policy": { "complexity": { "minLength": 8, "minLowerCase": 1, "minUpperCase": 1, "minNumber": 1, "minSymbol": 0, "excludeUsername": true }, "age": { "minAgeMinutes": 0, "historyCount": 0 } } }, "_links": { "next": { "name": "changePassword", "href": "http://localhost:8080/api/v1/authn/credentials/change_password", "hints": { "allow": ["POST"] } }, "cancel": { "href": "http://localhost:8080/api/v1/authn/cancel", "hints": { "allow": ["POST"] } } } });
   }
   else if (req.body.answer === 'fail') {
     res.status(403);
-    res.json(mkError("Invalid Passcode/Answer", [ "Your answer doesn't match our records. Please try again." ]));
+    res.json(mkError("Invalid Passcode/Answer", ["Your answer doesn't match our records. Please try again."]));
   }
   else if (factor.length === 1) {
     finalReponse(res);
@@ -372,25 +509,25 @@ app.post('/api/v1/authn/factors/:factorId/verify', function(req, res, next) {
   }
 });
 
-app.get('/api/v1/registration/form', function(req, res, next) {
+app.get('/api/v1/registration/form', function (req, res, next) {
   if (mockSettings.config.filter((o) => o.key === 'schema').length) {
-    res.json({"policyId":"reg3h8seELACUgy3p0g4","lastUpdate":1540847616000,"profileSchema":{"properties":{"firstName":{"type":"string","title":"First name","maxLength":50,"default":"string"},"lastName":{"type":"string","title":"Last name","maxLength":50,"default":"string"},"password":{"type":"string","title":"Password","allOf":[{"description":"At least 8 character(s)","minLength":8},{"description":"At least 1 number(s)","format":"/[\\d]+/"},{"description":"At least 1 lowercase letter(s)","format":"/[a-z]+/"},{"description":"At least 1 uppercase letter(s)","format":"/[A-Z]+/"},{"description":"Does not contain part of username","format":"/^[#/userName]/"}],"default":"Password"},"email":{"type":"email","title":"Email","format":"email","default":"Email"}},"required":["email","password","firstName","lastName"],"fieldOrder":["email","password","firstName","lastName"]}});
+    res.json({ "policyId": "reg3h8seELACUgy3p0g4", "lastUpdate": 1540847616000, "profileSchema": { "properties": { "firstName": { "type": "string", "title": "First name", "maxLength": 50, "default": "string" }, "lastName": { "type": "string", "title": "Last name", "maxLength": 50, "default": "string" }, "password": { "type": "string", "title": "Password", "allOf": [{ "description": "At least 8 character(s)", "minLength": 8 }, { "description": "At least 1 number(s)", "format": "/[\\d]+/" }, { "description": "At least 1 lowercase letter(s)", "format": "/[a-z]+/" }, { "description": "At least 1 uppercase letter(s)", "format": "/[A-Z]+/" }, { "description": "Does not contain part of username", "format": "/^[#/userName]/" }], "default": "Password" }, "email": { "type": "email", "title": "Email", "format": "email", "default": "Email" } }, "required": ["email", "password", "firstName", "lastName"], "fieldOrder": ["email", "password", "firstName", "lastName"] } });
   } else {
     res.status(401);
     res.json(mkError("Not Supported Registration Schema"));
   }
 });
 
-app.post('/api/v1/registration/reg3h8seELACUgy3p0g4/register', function(req, res, next) {
+app.post('/api/v1/registration/reg3h8seELACUgy3p0g4/register', function (req, res, next) {
   if (mockSettings.config.filter((o) => o.key === 'register').length) {
-    res.json({activationToken: ""});
+    res.json({ activationToken: "" });
   } else {
     res.status(401);
     res.json(mkError("Not Supported Registration"));
   }
 });
 
-app.post('/api/v1/authn/recovery/unlock', function(req, res, netx) {
+app.post('/api/v1/authn/recovery/unlock', function (req, res, netx) {
   res.json({
     factorResult: "WAITING",
     factorType: "EMAIL",
@@ -399,16 +536,16 @@ app.post('/api/v1/authn/recovery/unlock', function(req, res, netx) {
   });
 });
 
-app.post('/api/v1/authn/cancel', function(req, res, next) {
+app.post('/api/v1/authn/cancel', function (req, res, next) {
   res.json({});
 });
 
-app.post('/api/v1/authn/credentials/change_password', function(req, res, next) {
+app.post('/api/v1/authn/credentials/change_password', function (req, res, next) {
   finalReponse(res);
 });
 
-app.get('/login/getimage', function(req, res, next) {
-  res.json({"result":"success","pwdImg":"/img/security/hello.png","imageDescription":""});
+app.get('/login/getimage', function (req, res, next) {
+  res.json({ "result": "success", "pwdImg": "/img/security/hello.png", "imageDescription": "" });
 });
 
 
