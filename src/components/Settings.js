@@ -4,8 +4,8 @@ import SettingsConfig from './SettingsConfig';
 import PropTypes from 'prop-types';
 import './Settings.css';
 import { Header, List, Checkbox, Popup, Divider, Form, Card } from 'semantic-ui-react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import Constants from '../util/Constants';
 
 const checkboxItems = SettingsConfig.features;
@@ -22,6 +22,9 @@ const signInWidgetOption = {
     // rememberMe: false,
   },
 };
+// TODO:
+// 1. save to local storage
+// 2. add reset button
 
 class Settings extends Component {
 
@@ -30,7 +33,7 @@ class Settings extends Component {
   };
 
   notify = (message) => {
-    toast.info(message);
+    // toast.info(message);
   }
 
   componentDidMount() {
@@ -40,12 +43,12 @@ class Settings extends Component {
   toggleCheckbox = (event, checkboxItem) => {
     signInWidgetOption.features[checkboxItem.label] = checkboxItem.checked;
     this.props.settingChangedFn(signInWidgetOption);
-    this.notify("Widget Config Updated");
+    // this.notify("Widget Config Updated");
   }
 
   updateSignInWidget = _.throttle(() => {
     this.props.settingChangedFn(signInWidgetOption);
-    this.notify("SignIn Widget option has been updated.");
+    // this.notify("SignIn Widget option has been updated.");
   }, 5000);
 
   updateBaseUrl = (event) => {
@@ -106,7 +109,7 @@ class Settings extends Component {
 
           </Form>
 
-          <ToastContainer
+          {/* <ToastContainer
             position="bottom-center"
             autoClose={1000}
             hideProgressBar={false}
@@ -116,7 +119,7 @@ class Settings extends Component {
             pauseOnVisibilityChange
             draggable
             pauseOnHover
-          />
+          /> */}
         </Card.Content>
       </Card>
     );

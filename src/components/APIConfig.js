@@ -7,8 +7,8 @@ import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
 import { Header, Card } from 'semantic-ui-react'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 
 const transactions = [
@@ -95,16 +95,16 @@ class APIConfig extends React.Component {
         };
     }
 
-    notify = (message) => {
-        toast.info(message);
-    }
+    // notify = (message) => {
+    //     toast.info(message);
+    // }
 
     onCheck = (checkedKeys, info) => {
         this.keys = checkedKeys;
         const postDataKeys = convertKeysToPostData(this.keys);
 
         this.props.apiConfigFn(postDataKeys);
-        this.notify("API Config updated");
+        // this.notify("API Config updated");
     }
 
     render() {
@@ -136,7 +136,7 @@ class APIConfig extends React.Component {
                         onCheck={this.onCheck}
                         treeData={treeDataRegistrations}
                     />
-                    <ToastContainer
+                    {/* <ToastContainer
                         position="bottom-center"
                         autoClose={1000}
                         hideProgressBar={false}
@@ -146,7 +146,7 @@ class APIConfig extends React.Component {
                         pauseOnVisibilityChange
                         draggable={false}
                         pauseOnHover={false}
-                    />
+                    /> */}
                 </Card.Content>
             </Card>
         );

@@ -5,7 +5,7 @@ import Settings from './components/Settings';
 import APIConfig from "./components/APIConfig";
 import Footer from "./components/Footer";
 import { save as saveApiConfig } from './api/config';
-import { Grid } from 'semantic-ui-react'
+// import { Grid } from 'semantic-ui-react'
 
 class App extends Component {
 
