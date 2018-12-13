@@ -105,7 +105,7 @@ const accountStatus = {
     "_links": {
       "next": {
         "name": "changePassword",
-        "href": "http://localhost:9001/api/v1/authn/credentials/change_password",
+        "href": "http://localhost:9191/api/v1/authn/credentials/change_password",
         "hints": {
           "allow": [
             "POST"
@@ -114,7 +114,7 @@ const accountStatus = {
       },
       "skip": {
         "name": "skip",
-        "href": "http://localhost:9001/api/v1/authn/skip",
+        "href": "http://localhost:9191/api/v1/authn/skip",
         "hints": {
           "allow": [
             "POST"
@@ -122,7 +122,7 @@ const accountStatus = {
         }
       },
       "cancel": {
-        "href": "http://localhost:9001/api/v1/authn/cancel",
+        "href": "http://localhost:9191/api/v1/authn/cancel",
         "hints": {
           "allow": [
             "POST"
@@ -167,6 +167,7 @@ const accountStatus = {
       "next": {
         "name": "changePassword",
         "href": "http://localhost:9191/api/v1/authn/credentials/change_password",
+        "title": "HW change expired password",
         "hints": {
           "allow": [
             "POST"
@@ -203,7 +204,7 @@ const accountStatus = {
     "_links": {
       "next": {
         "name": "resetPassword",
-        "href": "http://localhost:9001/api/v1/authn/credentials/reset_password",
+        "href": "http://localhost:9191/api/v1/authn/credentials/reset_password",
         "hints": {
           "allow": [
             "POST"
@@ -211,7 +212,7 @@ const accountStatus = {
         }
       },
       "cancel": {
-        "href": "http://localhost:9001/api/v1/authn/cancel",
+        "href": "http://localhost:9191/api/v1/authn/cancel",
         "hints": {
           "allow": [
             "POST"
@@ -250,7 +251,7 @@ const accountStatus = {
     "_links": {
       "next": {
         "name": "answer",
-        "href": "http://localhost:9001/api/v1/authn/recovery/answer",
+        "href": "http://localhost:9191/api/v1/authn/recovery/answer",
         "hints": {
           "allow": [
             "POST"
@@ -258,7 +259,7 @@ const accountStatus = {
         }
       },
       "cancel": {
-        "href": "http://localhost:9001/api/v1/authn/cancel",
+        "href": "http://localhost:9191/api/v1/authn/cancel",
         "hints": {
           "allow": [
             "POST"
@@ -458,11 +459,11 @@ const factorObjects = {
     "_links": {
       "next": {
         "name": "verify",
-        "href": "http://localhost:9001/api/v1/authn/factors/webauthnFactorId/verify",
+        "href": "http://localhost:9191/api/v1/authn/factors/webauthnFactorId/verify",
         "hints": { "allow": ["POST"] }
       },
-      "cancel": { "href": "http://localhost:9001/api/v1/authn/cancel", "hints": { "allow": ["POST"] } },
-      "prev": { "href": "http://localhost:9001/api/v1/authn/previous", "hints": { "allow": ["POST"] } }
+      "cancel": { "href": "http://localhost:9191/api/v1/authn/cancel", "hints": { "allow": ["POST"] } },
+      "prev": { "href": "http://localhost:9191/api/v1/authn/previous", "hints": { "allow": ["POST"] } }
     }
   }
 }
@@ -475,6 +476,29 @@ function finalReponse(res) {
   } else {
     res.status(401);
     res.json(mkError("Invalid value provided", [
+      "expect to mock 'SUCCESS' response but not checked."
+    ]));
+  }
+}
+
+function authVerifyResponse(res) {
+  const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
+
+  if (children.includes('OKTA_PUSH')) {
+    // const oktaPushChallengeWaiting = require('./data/MFA_CHALLENGE-okta-push-waiting.json');
+    // res.json(oktaPushChallengeWaiting);
+
+    const oktaPushChallengeRejected = require('./data/MFA_CHALLENGE-okta-push-rejected.json');
+    res.json(oktaPushChallengeRejected);
+
+    // const oktaPushChallengeTimeout = require('./data/MFA_CHALLENGE-okta-push-timeout.json');
+    // res.json(oktaPushChallengeTimeout);
+  }
+  else if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
+    res.json({ "expiresAt": "2018-11-07T21:06:59.000Z", "status": "SUCCESS", "sessionToken": "20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A", "_embedded": { "user": { "id": "00uqbtiaptVVLmjCd0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "administrator1@clouditude.net", "firstName": "Add-Min", "lastName": "O'Cloudy Tud", "locale": "en", "timeZone": "America/Los_Angeles" } } } });
+  } else {
+    res.status(401);
+    res.json(mkError("authVerifyResponse", [
       "expect to mock 'SUCCESS' response but not checked."
     ]));
   }
@@ -593,15 +617,14 @@ app.post('/api/v1/authn/factors/:factorId/verify', function (req, res, next) {
   console.log('factor verify:', factorId, factor.length);
 
   if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_EXPIRED').length > 0) {
-    res.json({ "stateToken": "00VXyMVirQsranoRXat5qOUSQ_J7WhGazAhW4Kssz2", "expiresAt": "2018-11-08T17:50:14.000Z", "status": "PASSWORD_EXPIRED", "_embedded": { "user": { "id": "00uqbxPh7V77mxdho0g3", "passwordChanged": "2018-10-09T22:20:02.000Z", "profile": { "login": "inca@clouditude.net", "firstName": "Inca-Louise", "lastName": "O'Rain Dum", "locale": "en", "timeZone": "America/Los_Angeles" } }, "policy": { "complexity": { "minLength": 8, "minLowerCase": 1, "minUpperCase": 1, "minNumber": 1, "minSymbol": 0, "excludeUsername": true }, "age": { "minAgeMinutes": 0, "historyCount": 0 } } }, "_links": { "next": { "name": "changePassword", "href": "http://localhost:9191/api/v1/authn/credentials/change_password", "hints": { "allow": ["POST"] } }, "cancel": { "href": "http://localhost:9191/api/v1/authn/cancel", "hints": { "allow": ["POST"] } } } });
+    res.json(accountStatus['PASSWORD_EXPIRED']);
   }
   else if (req.body.answer === 'fail') {
     res.status(403);
     res.json(mkError("Invalid Passcode/Answer", ["Your answer doesn't match our records. Please try again."]));
   }
   else if (factor.length === 1) {
-    // TODO: some factors shall generate MFA_CHALLENGE response
-    finalReponse(res);
+    authVerifyResponse(res);
   } else {
     res.status(401);
     res.json(mkError("Authentication failed", ["unknown error at factors/verify"]));

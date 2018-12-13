@@ -10,5 +10,6 @@ export default {
       'securityImage',
       'selfServiceUnlock',
       'showPasswordToggleOnSignInPage',
+      'customExpiredPassword',
 	]
 }
