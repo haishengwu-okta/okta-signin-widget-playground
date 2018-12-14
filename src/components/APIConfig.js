@@ -6,7 +6,7 @@ import Tree from 'rc-tree';
 import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
-import { Header, Card } from 'semantic-ui-react'
+import { Header, Card } from 'semantic-ui-react';
 
 const transactions = [
     {
@@ -53,7 +53,7 @@ const transactions = [
 const registrations = [
     { key: 'schema' },
     { key: 'register' },
-]
+];
 
 
 //
@@ -85,9 +85,9 @@ const convertKeysToPostData = (keys) => {
         } else {
             result[key] = { key, children: [] };
         }
-    })
+    });
     return Object.values(result);
-}
+};
 
 class APIConfig extends React.Component {
     static propTypes = {
@@ -109,7 +109,7 @@ class APIConfig extends React.Component {
         const postDataKeys = convertKeysToPostData(this.keys);
 
         this.props.apiConfigFn(postDataKeys);
-        this.notify("API Config updated");
+        this.notify('API Config updated');
     }
 
     render() {

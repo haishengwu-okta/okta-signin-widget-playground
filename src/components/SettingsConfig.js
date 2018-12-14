@@ -1,15 +1,15 @@
 export default {
-  // FEATURES
+    // FEATURES
     // 'multiOptionalFactorEnroll',
     features: [
-      'router',
-      'autoPush',
-      'emailRecovery',
-      'registration',
-      'rememberMe',
-      'securityImage',
-      'selfServiceUnlock',
-      'showPasswordToggleOnSignInPage',
-      'customExpiredPassword',
-	]
-}
+        'router',
+        'autoPush',
+        'emailRecovery',
+        'registration',
+        'rememberMe',
+        'securityImage',
+        'selfServiceUnlock',
+        'showPasswordToggleOnSignInPage',
+        'customExpiredPassword',
+    ]
+};

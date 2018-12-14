@@ -12,6 +12,6 @@ const save = async (config) => {
         console.log('API config error', error);
     }
 
-}
+};
 
 export { save };

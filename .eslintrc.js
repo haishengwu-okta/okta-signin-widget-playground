@@ -5,6 +5,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
+    "parser": "babel-eslint",
     "extends": "eslint:recommended",
     "parserOptions": {
         "ecmaFeatures": {
@@ -14,9 +15,13 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "babel",
+        "react",
+        "class-property"
     ],
     "rules": {
+        "no-console": 0,
+        "no-unused-vars": 0,
         "indent": [
             "error",
             4

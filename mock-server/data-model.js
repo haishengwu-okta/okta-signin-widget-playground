@@ -15,11 +15,11 @@ const authResp = () => {
         if (authType === 'step-up') {
             authResp._links.next = {
                 href: '/login/step-up/redirect?' + stateToken,
-                name: "original",
+                name: 'original',
                 hints: {
                     allow: ['GET']
                 }
-            }
+            };
         } else {
             authResp.sessionToken = 'session-token-abc';
         }
@@ -34,5 +34,5 @@ const authResp = () => {
         expiresAt: 'some expiration date',
         status: authState,
         type: 'TODO: stateToken.type'
-    }
-}
+    };
+};

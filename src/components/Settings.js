@@ -8,17 +8,17 @@ import Constants from '../util/Constants';
 
 const checkboxItems = SettingsConfig.features;
 const languageOptions = [
-  { key: 'en', value: 'en', flag: 'us', text: 'English' },
-  { key: 'fr', value: 'fr', flag: 'fr', text: 'France' },
-  { key: 'zh-CN', value: 'zh-CN', flag: 'cn', text: 'zh-CN' },
-]
+    { key: 'en', value: 'en', flag: 'us', text: 'English' },
+    { key: 'fr', value: 'fr', flag: 'fr', text: 'France' },
+    { key: 'zh-CN', value: 'zh-CN', flag: 'cn', text: 'zh-CN' },
+];
 const signInWidgetOption = {
-  baseUrl: Constants.MOCK_SERVER,
-  logo: '/img/logo.svg',
-  features: {
-    router: true,
+    baseUrl: Constants.MOCK_SERVER,
+    logo: '/img/logo.svg',
+    features: {
+        router: true,
     // rememberMe: false,
-  },
+    },
 };
 // TODO:
 // 1. save to local storage
@@ -27,89 +27,89 @@ const signInWidgetOption = {
 class Settings extends Component {
 
   static propTypes = {
-    settingChangedFn: PropTypes.func,
+      settingChangedFn: PropTypes.func,
   };
 
   notify = (message) => {
-    console.debug(message);
+      console.debug(message);
   }
 
   componentDidMount() {
-    this.props.settingChangedFn(signInWidgetOption);
+      this.props.settingChangedFn(signInWidgetOption);
   }
 
   toggleCheckbox = (event, checkboxItem) => {
-    signInWidgetOption.features[checkboxItem.label] = checkboxItem.checked;
-    this.props.settingChangedFn(signInWidgetOption);
-    this.notify("Widget Config Updated");
+      signInWidgetOption.features[checkboxItem.label] = checkboxItem.checked;
+      this.props.settingChangedFn(signInWidgetOption);
+      this.notify('Widget Config Updated');
   }
 
   updateSignInWidget = _.throttle(() => {
-    this.props.settingChangedFn(signInWidgetOption);
-    this.notify("SignIn Widget option has been updated.");
+      this.props.settingChangedFn(signInWidgetOption);
+      this.notify('SignIn Widget option has been updated.');
   }, 5000);
 
   updateBaseUrl = (event) => {
-    const inputValue = event.currentTarget.value;
-    if (inputValue.indexOf('http') === 0) {
-      signInWidgetOption.baseUrl = inputValue;
-      this.updateSignInWidget();
-    }
+      const inputValue = event.currentTarget.value;
+      if (inputValue.indexOf('http') === 0) {
+          signInWidgetOption.baseUrl = inputValue;
+          this.updateSignInWidget();
+      }
   }
 
   updateStateToken = (event) => {
-    const inputValue = event.currentTarget.value;
-    signInWidgetOption.stateToken = inputValue;
-    this.updateSignInWidget();
+      const inputValue = event.currentTarget.value;
+      signInWidgetOption.stateToken = inputValue;
+      this.updateSignInWidget();
   };
 
   updateLanguage = (event, { value }) => {
-    signInWidgetOption.language = value;
-    this.updateSignInWidget();
+      signInWidgetOption.language = value;
+      this.updateSignInWidget();
   }
 
   render() {
-    return (
-      <Card className="settings">
-        <Card.Content>
-          <Header as='h2'>Widget Settings</Header>
+      return (
+          <Card className="settings">
+              <Card.Content>
+                  <Header as='h2'>Widget Settings</Header>
 
-            <Header as='h3'>Features</Header>
-          <Form size="small">
+                  <Header as='h3'>Features</Header>
+                  <Form size="small">
 
-            <Form.Field>
-              <List>
-                {
-                  checkboxItems.map((label) => {
-                    return <List.Item key={label}>
-                      <Checkbox label={label} onChange={this.toggleCheckbox} />
-                    </List.Item>
-                  })
-                }
-              </List>
-            </Form.Field>
+                      <Form.Field>
+                          <List>
+                              {
+                                  checkboxItems.map((label) => {
+                                      return <List.Item key={label}>
+                                          <Checkbox label={label} onChange={this.toggleCheckbox} />
+                                      </List.Item>;
+                                  })
+                              }
+                          </List>
+                      </Form.Field>
 
-            <Divider />
+                      <Divider />
 
-            <Form.Field>
-              <Popup trigger={<Form.Input label="Base URL" onBlur={this.updateBaseUrl} placeholder="okta domain url" />}>
+                      <Form.Field>
+                          <Popup trigger={<Form.Input label="Base URL" onBlur={this.updateBaseUrl} placeholder="okta domain url" />}>
                 Specify a base url to bootstrap the widget
-            </Popup>
-            </Form.Field>
+                          </Popup>
+                      </Form.Field>
 
-            <Form.Field>
-              <Form.Input label="State Token" placeholder="" onBlur={this.updateStateToken} />
-            </Form.Field>
+                      <Form.Field>
+                          <Form.Input label="State Token" placeholder="" onBlur={this.updateStateToken} />
+                      </Form.Field>
 
-            <Form.Field>
-              <Form.Select label='Select your language' options={languageOptions} onChange={this.updateLanguage} />
-            </Form.Field>
+                      <Form.Field>
+                          <Form.Select label='Select your language' options={languageOptions} onChange={this.updateLanguage} />
+                      </Form.Field>
 
-          </Form>
+                  </Form>
 
-        </Card.Content>
-      </Card>
-    );
+              </Card.Content>
+          </Card>
+      );
   }
 }
 
