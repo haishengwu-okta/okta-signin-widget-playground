@@ -516,6 +516,11 @@ app.post('/api/v1/authn', function (req, res, next) {
   else if (mockSettings.config.filter(kv => kv.key === 'UNLOCK').length > 0) {
     res.json(accountStatus['UNLOCK']);
   }
+  if (mockSettings.config.filter(kv => kv.key === 'UNAUTHENTICATED').length > 0) {
+    const unauth = require('./data/UNAUTHENTICATED.json');
+    const unauthPasswordless = require('./data/UNAUTHENTICATED-passwordless.json');
+    res.json(unauthPasswordless);
+  }
   else if (mockSettings.config.filter(kv => kv.key === 'PASSWORD_WARN').length > 0) {
     res.json(accountStatus['PASSWORD_WARN']);
   }

@@ -22,6 +22,9 @@ const transactions = [
         ],
     },
     {
+        key: 'UNAUTHENTICATED'
+    },
+    {
         key: 'LOCKED_OUT'
     },
     {

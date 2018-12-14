@@ -1,16 +1,8 @@
 const authResp = () => {
     const authState = '';
     const authType = '';
-    const policy = {
-        "allowRememberDevice": false,
-        "rememberDeviceLifetimeInMinutes": 0,
-        "rememberDeviceByDefault": false,
-        "factorsPolicyInfo": {
-            "opf1emz8qeuVPx5El1d8": {
-                "autoPushEnabled": true
-            }
-        }
-    };
+    const policy = require('./policy');
+    const factors = require('./factors');
 
     const stateToken = 'state-token-23';
 
