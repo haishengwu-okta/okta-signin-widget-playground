@@ -12,31 +12,39 @@ module.exports = {
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
     },
     "plugins": [
         "babel",
         "react",
-        "class-property"
+        "class-property",
     ],
     "rules": {
         "no-console": 0,
         "no-unused-vars": 0,
+        "comma-dangle": [
+            "error",
+            "always",
+        ],
         "indent": [
             "error",
-            4
+            4,
         ],
         "linebreak-style": [
             "error",
-            "unix"
+            "unix",
         ],
         "quotes": [
             "error",
-            "single"
+            "single",
         ],
         "semi": [
             "error",
-            "always"
-        ]
+            "always",
+        ],
+        'indent': [
+            'error',
+            2,
+        ],
     }
 };
