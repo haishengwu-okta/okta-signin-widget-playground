@@ -58,7 +58,7 @@ const registrations = [
 // MFA_CHALLENGE,
 // MFA_ENROLL,
 // MFA_ENROLL_ACTIVATE,
-//
+// CONSENT_REQUIRED
 //
 
 const convertToTreeData = (obj) => {
