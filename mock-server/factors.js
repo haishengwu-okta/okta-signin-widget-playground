@@ -1,3 +1,5 @@
+// com.okta.services.factors.iface.dto.UserFactor.java
+
 const oktaQuestion = {
   'id': 'x-factor-okta-question',
   'factorType': 'question',
@@ -35,7 +37,21 @@ const oktaSms = {
   },
 };
 
-module.exports = [
+const oidc = {
+  "id": "x-factor-oidc",
+  "factorType": "assertion:oidc",
+  "provider": "GENERIC_OIDC",
+  "vendorName": "OIDC Factor",
+  "profile": {
+    "user": "inca@clouditude.net"
+  }
+};
+
+const factors = [
   oktaQuestion,
   oktaSms,
 ];
+module.exports = {
+  enrolledFactors: factors,
+  availableFactors: factors,
+};
