@@ -6,7 +6,7 @@ import Tree from 'rc-tree';
 import PropTypes from 'prop-types';
 import 'rc-tree/assets/index.css';
 import './APIConfig.css';
-import { Header, Card, } from 'semantic-ui-react';
+import { Header, Card, Button,} from 'semantic-ui-react';
 
 const transactions = [
   {
@@ -55,10 +55,20 @@ const registrations = [
   { key: 'register', },
 ];
 
+const runtimeConfigs = [
+  {
+    key: 'MFA_CHALLENGE',
+    children: [
+      'OKTA_PUSH_ACCEPT',
+      'OKTA_PUSH_TIMEOUT',
+      'OKTA_PUSH_REJECT',
+    ],
+  },
+];
 
 //
 //
-// MFA_CHALLENGE,
+// ,
 // MFA_ENROLL,
 // MFA_ENROLL_ACTIVATE,
 // CONSENT_REQUIRED
@@ -72,6 +82,7 @@ const convertToTreeData = (obj) => {
 };
 const treeDataTransactions = transactions.map(convertToTreeData);
 const treeDataRegistrations = registrations.map(convertToTreeData);
+const treeDataRuntimeConfig = runtimeConfigs.map(convertToTreeData);
 
 const convertKeysToPostData = (keys) => {
   const result = {};
@@ -112,6 +123,20 @@ class APIConfig extends React.Component {
       this.notify('API Config updated');
     }
 
+    clearConfig = () => {
+      this.props.apiConfigFn([]);
+      this.notify('API Config has been cleared.');
+    }
+
+    onCheckRuntimeConfig = (checkedKeys) => {
+      // TODO: how to reset the config?
+      const keys = this.keys.concat(checkedKeys);
+      const postDataKeys = convertKeysToPostData(keys);
+
+      this.props.apiConfigFn(postDataKeys, false);
+      this.notify('API Config updated');
+    }
+
     render() {
       return (
         <Card className="main-api-config">
@@ -141,6 +166,22 @@ class APIConfig extends React.Component {
               onCheck={this.onCheck}
               treeData={treeDataRegistrations}
             />
+
+            <Header as='h3'>Runtime Configs</Header>
+
+            <Tree
+              className=""
+              showIcon={false}
+              showLine={false}
+              checkable
+              selectable={false}
+              defaultExpandAll
+              onExpand={this.onExpand}
+              onCheck={this.onCheckRuntimeConfig}
+              treeData={treeDataRuntimeConfig}
+            />
+
+            <Button primary content="Reset" onClick={this.clearConfig} />
           </Card.Content>
         </Card>
       );

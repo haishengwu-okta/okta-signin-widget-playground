@@ -17,11 +17,13 @@ class App extends Component {
     };
   }
 
-  apiConfigFn = async (res) => {
+  apiConfigFn = async (res, refreshUI = true) => {
     await saveApiConfig(res);
-    this.setState({
-      apiMockChanged: true,
-    });
+    if (refreshUI) {
+      this.setState({
+        apiMockChanged: true,
+      });
+    }
   }
 
   saveSignInWidgetOptions = (signInWidgetOption) => {

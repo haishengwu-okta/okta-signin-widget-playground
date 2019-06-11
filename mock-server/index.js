@@ -483,18 +483,23 @@ function finalReponse(res) {
 
 function authVerifyResponse(res) {
   const children = mockSettings.config.filter(kv => kv.key === 'MFA_REQUIRED')[0].children;
+  let mfaChallenge = [];
 
-  if (children.includes('OKTA_PUSH')) {
-    // const oktaPushChallengeWaiting = require('./data/MFA_CHALLENGE-okta-push-waiting.json');
-    // res.json(oktaPushChallengeWaiting);
-
+  if (mockSettings.config.filter(kv => kv.key === 'MFA_CHALLENGE').length) {
+    mfaChallenge = mockSettings.config.filter(kv => kv.key === 'MFA_CHALLENGE')[0].children;
+  }
+  if (mfaChallenge.includes('OKTA_PUSH_TIMEOUT')) {
+    const oktaPushChallengeTimeout = require('./data/MFA_CHALLENGE-okta-push-timeout.json');
+    res.json(oktaPushChallengeTimeout);
+  } else if (mfaChallenge.includes('OKTA_PUSH_REJECT')) {
     const oktaPushChallengeRejected = require('./data/MFA_CHALLENGE-okta-push-rejected.json');
     res.json(oktaPushChallengeRejected);
-
-    // const oktaPushChallengeTimeout = require('./data/MFA_CHALLENGE-okta-push-timeout.json');
-    // res.json(oktaPushChallengeTimeout);
+  } else if (children.includes('OKTA_PUSH')) {
+    const oktaPushChallengeWaiting = require('./data/MFA_CHALLENGE-okta-push-waiting.json');
+    res.json(oktaPushChallengeWaiting);
   }
   else if (mockSettings.config.filter(kv => kv.key === 'SUCCESS').length > 0) {
+    // TODO: if has SUCCESS config
     res.json({ 'expiresAt': '2018-11-07T21:06:59.000Z', 'status': 'SUCCESS', 'sessionToken': '20111YmUsD3n5ytUGvmQXeHJ2f4dtYhVBznaJYZMuARaLcJIKz4TG5A', '_embedded': { 'user': { 'id': '00uqbtiaptVVLmjCd0g3', 'passwordChanged': '2018-10-09T22:20:02.000Z', 'profile': { 'login': 'administrator1@clouditude.net', 'firstName': 'Add-Min', 'lastName': 'O\'Cloudy Tud', 'locale': 'en', 'timeZone': 'America/Los_Angeles', }, }, }, });
   } else {
     res.status(401);
