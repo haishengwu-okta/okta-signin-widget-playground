@@ -2,7 +2,6 @@ import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
-import '@okta/okta-signin-widget/dist/css/okta-theme.css';
 import LoginSuccess from './LoginSuccess';
 
 class OktaSignInWidget extends Component {
