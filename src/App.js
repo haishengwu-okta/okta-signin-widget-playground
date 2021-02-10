@@ -32,6 +32,10 @@ class App extends Component {
     });
   };
 
+  helloApp() {
+    console.log('hello app');
+  }
+
   render() {
     return (
       <div style={{
